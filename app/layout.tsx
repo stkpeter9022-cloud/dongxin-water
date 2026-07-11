@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     title: "棟鑫水電｜雙北24小時水電急修",
     description:
       "24小時快速到府，專業處理跳電、漏水、抓漏、水管、馬達維修。",
-    url: "https://你的網域.com",
+    url: "https://dongxin24.com",
     siteName: "棟鑫水電",
     locale: "zh_TW",
     type: "website",
