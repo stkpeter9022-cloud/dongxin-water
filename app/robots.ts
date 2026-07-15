@@ -1,4 +1,4 @@
-import type { MetadataRoute } from "next";
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://你的網域.com/sitemap.xml",
+    sitemap: "https://dongxin24.com/sitemap.xml",
   };
 }
