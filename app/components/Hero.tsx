@@ -1,12 +1,29 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <section
       style={{
         position: "relative",
         minHeight: "100vh",
-        paddingTop: "90px",
+        paddingTop: isMobile ? "110px" : "90px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -15,7 +32,6 @@ export default function Hero() {
         color: "#fff",
       }}
     >
-      {/* 背景 */}
       <Image
         src="/case3.jpg"
         alt="棟鑫水電"
@@ -27,67 +43,81 @@ export default function Hero() {
         }}
       />
 
-      {/* 內容 */}
       <div
         style={{
           position: "relative",
           zIndex: 2,
-          maxWidth: "1000px",
           width: "100%",
-          padding: "20px",
+          maxWidth: "1100px",
+          padding: isMobile ? "20px" : "40px",
         }}
       >
+        {/* 主標 */}
         <h1
           style={{
-            fontSize: "68px",
+            fontSize: isMobile ? "42px" : "68px",
             fontWeight: "bold",
-            marginBottom: "10px",
+            marginBottom: "12px",
+            lineHeight: 1.2,
           }}
         >
           棟鑫水電
         </h1>
 
+        {/* 副標 */}
         <h2
           style={{
             color: "#FFD54A",
-            fontSize: "42px",
+            fontSize: isMobile ? "22px" : "42px",
             fontWeight: "bold",
-            marginBottom: "25px",
+            lineHeight: 1.5,
+            marginBottom: "30px",
           }}
         >
-          24小時水電急修｜雙北快速到府
+          24小時水電急修
+          <br />
+          雙北快速到府
         </h2>
 
-        <p
+        {/* 服務項目 */}
+        <div
           style={{
-            fontSize: "28px",
-            lineHeight: "58px",
-            marginBottom: "35px",
-            fontWeight: 600,
+            display: "grid",
+            gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)",
+            gap: isMobile ? "10px" : "16px",
+            maxWidth: isMobile ? "360px" : "900px",
+            margin: "0 auto 35px",
+            fontSize: isMobile ? "17px" : "26px",
+            fontWeight: "bold",
           }}
         >
-          跳電維修｜漏水處理｜抓漏服務｜衛浴設備
-          <br />
-          水塔檢修｜水管疏通｜馬桶不通｜馬達維修
-        </p>
+          <span>跳電維修</span>
+          <span>漏水處理</span>
+          <span>抓漏服務</span>
+          <span>衛浴設備</span>
+          <span>水塔檢修</span>
+          <span>水管疏通</span>
+          <span>馬桶不通</span>
+          <span>馬達維修</span>
+        </div>
 
         {/* 特色 */}
         <div
           style={{
             display: "flex",
             justifyContent: "center",
-            gap: "18px",
+            gap: "12px",
             flexWrap: "wrap",
-            marginBottom: "40px",
+            marginBottom: "35px",
           }}
         >
           <div
             style={{
               background: "rgba(255,255,255,.18)",
-              backdropFilter: "blur(10px)",
-              padding: "12px 30px",
+              backdropFilter: "blur(8px)",
+              padding: isMobile ? "10px 16px" : "12px 28px",
               borderRadius: "999px",
-              fontSize: "18px",
+              fontSize: isMobile ? "14px" : "18px",
             }}
           >
             🚚 24H快速到府
@@ -96,10 +126,10 @@ export default function Hero() {
           <div
             style={{
               background: "rgba(255,255,255,.18)",
-              backdropFilter: "blur(10px)",
-              padding: "12px 30px",
+              backdropFilter: "blur(8px)",
+              padding: isMobile ? "10px 16px" : "12px 28px",
               borderRadius: "999px",
-              fontSize: "18px",
+              fontSize: isMobile ? "14px" : "18px",
             }}
           >
             🛠️ 專業施工保固
@@ -110,27 +140,27 @@ export default function Hero() {
         <div
           style={{
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             justifyContent: "center",
-            gap: "25px",
-            flexWrap: "wrap",
+            alignItems: "center",
+            gap: "18px",
           }}
         >
           <a
             href="tel:0918808209"
             style={{
-              width: "260px",
-              height: "68px",
+              width: isMobile ? "100%" : "260px",
+              maxWidth: "320px",
+              height: "60px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              background: "#ff3b30",
+              background: "#ef4444",
               color: "#fff",
               borderRadius: "14px",
               textDecoration: "none",
               fontWeight: "bold",
-              fontSize: "24px",
-              boxShadow: "0 8px 20px rgba(255,59,48,.35)",
-              transition: ".3s",
+              fontSize: isMobile ? "18px" : "24px",
             }}
           >
             📞 立即來電
@@ -141,8 +171,9 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              width: "260px",
-              height: "68px",
+              width: isMobile ? "100%" : "260px",
+              maxWidth: "320px",
+              height: "60px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -151,9 +182,7 @@ export default function Hero() {
               borderRadius: "14px",
               textDecoration: "none",
               fontWeight: "bold",
-              fontSize: "24px",
-              boxShadow: "0 8px 20px rgba(6,199,85,.35)",
-              transition: ".3s",
+              fontSize: isMobile ? "18px" : "24px",
             }}
           >
             💬 LINE立即詢問
