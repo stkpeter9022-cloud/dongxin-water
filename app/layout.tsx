@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import FloatingButtons from "./components/FloatingButtons";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://dongxin24.com"),
@@ -98,6 +99,8 @@ export default function RootLayout({
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+
             gtag('js', new Date());
 
             gtag('config', 'AW-16737912362');
@@ -106,7 +109,10 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body>{children}</body>
+      <body>
+        {children}
+        <FloatingButtons />
+      </body>
     </html>
   );
 }
