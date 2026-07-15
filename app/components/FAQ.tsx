@@ -2,122 +2,115 @@
 
 import { useState } from "react";
 
-const faqs = [
-  {
-    q: "跳電可以立即處理嗎？",
-    a: "可以，24小時皆可來電，雙北地區最快一小時內到府（依當下路況及案件安排）。",
-  },
-  {
-    q: "漏水一定要敲牆嗎？",
-    a: "不一定，我們會先檢查漏水原因，確認問題後再提出最合適的處理方式，不會任意破壞裝潢。",
-  },
-  {
-    q: "馬桶堵塞可以當天處理嗎？",
-    a: "可以，大部分馬桶堵塞、水管堵塞皆可當天安排師傅到府處理。",
-  },
-  {
-    q: "施工完成後有保固嗎？",
-    a: "有，依施工項目提供保固，施工完成後也提供完善售後服務。",
-  },
-  {
-    q: "服務哪些地區？",
-    a: "目前服務範圍包含台北市、新北市，全區皆可快速到府。",
-  },
-  {
-    q: "可以先提供照片估價嗎？",
-    a: "可以，歡迎透過 LINE 傳送照片或影片，我們會先協助初步判斷，再安排現場檢查。",
-  },
-];
-
 export default function FAQ() {
+  const faqs = [
+    {
+      q: "24小時都有服務嗎？",
+      a: "是的，我們提供雙北地區 24 小時緊急水電維修服務。"
+    },
+    {
+      q: "多久可以到府？",
+      a: "依照距離及交通狀況，通常約 30～60 分鐘內到府。"
+    },
+    {
+      q: "會先報價嗎？",
+      a: "會，現場檢查後會先說明問題與費用，經您同意後才開始施工。"
+    },
+    {
+      q: "施工後有保固嗎？",
+      a: "有，依照工程項目提供保固，讓您更安心。"
+    }
+  ];
+
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section
-      id="faq"
       style={{
-        padding: "100px 20px",
         background: "#f8fafc",
+        padding: "70px 20px",
       }}
     >
-      <h2
-        style={{
-          textAlign: "center",
-          fontSize: "42px",
-          fontWeight: "bold",
-          marginBottom: "20px",
-        }}
-      >
-        常見問題
-      </h2>
-
-      <p
-        style={{
-          textAlign: "center",
-          color: "#666",
-          fontSize: "18px",
-          lineHeight: "32px",
-          marginBottom: "50px",
-        }}
-      >
-        以下整理客戶最常詢問的問題，
-        <br />
-        若仍有其他疑問，歡迎立即來電或加入 LINE 詢問。
-      </p>
-
       <div
         style={{
           maxWidth: "900px",
           margin: "0 auto",
         }}
       >
-        {faqs.map((item, index) => (
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "clamp(30px,6vw,42px)",
+            fontWeight: "bold",
+            color: "#111827",
+            marginBottom: "15px",
+          }}
+        >
+          常見問題
+        </h2>
+
+        <p
+          style={{
+            textAlign: "center",
+            color: "#64748b",
+            fontSize: "clamp(16px,4vw,18px)",
+            marginBottom: "45px",
+          }}
+        >
+          常見問題整理，快速了解棟鑫水電服務。
+        </p>
+
+        {faqs.map((faq, index) => (
           <div
             key={index}
             style={{
               background: "#fff",
-              borderRadius: "15px",
-              marginBottom: "18px",
-              boxShadow: "0 10px 25px rgba(0,0,0,.08)",
+              borderRadius: "16px",
+              marginBottom: "16px",
               overflow: "hidden",
+              boxShadow: "0 8px 20px rgba(0,0,0,.08)",
             }}
           >
-            <div
+            <button
               onClick={() =>
                 setOpen(open === index ? null : index)
               }
               style={{
+                width: "100%",
+                background: "#fff",
+                border: "none",
                 cursor: "pointer",
-                padding: "22px 28px",
+                padding: "22px",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                fontSize: "18px",
                 fontWeight: "bold",
-                fontSize: "20px",
+                color: "#111827",
               }}
             >
-              <span>{item.q}</span>
+              {faq.q}
 
               <span
                 style={{
-                  fontSize: "30px",
+                  fontSize: "24px",
                   color: "#2563eb",
                 }}
               >
-                {open === index ? "－" : "+"}
+                {open === index ? "−" : "+"}
               </span>
-            </div>
+            </button>
 
             {open === index && (
               <div
                 style={{
-                  padding: "0 28px 24px",
-                  color: "#555",
-                  fontSize: "17px",
-                  lineHeight: "32px",
+                  padding: "0 22px 22px",
+                  color: "#64748b",
+                  lineHeight: "30px",
+                  fontSize: "16px",
                 }}
               >
-                {item.a}
+                {faq.a}
               </div>
             )}
           </div>

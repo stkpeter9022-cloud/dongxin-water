@@ -25,80 +25,93 @@ export default function WhyUs() {
   return (
     <section
       style={{
-        padding: "90px 20px",
+        padding: "70px 20px",
         background: "#f8fafc",
       }}
     >
-      <h2
-        style={{
-          textAlign: "center",
-          fontSize: "42px",
-          fontWeight: "bold",
-          marginBottom: "15px",
-        }}
-      >
-        為什麼選擇棟鑫水電？
-      </h2>
-
-      <p
-        style={{
-          textAlign: "center",
-          color: "#666",
-          marginBottom: "55px",
-          fontSize: "18px",
-        }}
-      >
-        專業、快速、透明，讓您一次解決所有水電問題。
-      </p>
-
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))",
-          gap: "30px",
           maxWidth: "1200px",
           margin: "0 auto",
         }}
       >
-        {items.map((item, index) => (
-          <div
-            key={index}
-            style={{
-              background: "#fff",
-              borderRadius: "18px",
-              padding: "35px",
-              textAlign: "center",
-              boxShadow: "0 10px 25px rgba(0,0,0,.08)",
-            }}
-          >
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "clamp(30px,6vw,42px)",
+            fontWeight: "bold",
+            color: "#111827",
+            marginBottom: "15px",
+            lineHeight: 1.3,
+          }}
+        >
+          為什麼選擇棟鑫水電？
+        </h2>
+
+        <p
+          style={{
+            textAlign: "center",
+            color: "#64748b",
+            marginBottom: "45px",
+            fontSize: "clamp(16px,4vw,18px)",
+            padding: "0 10px",
+          }}
+        >
+          專業、快速、透明，讓您一次解決所有水電問題。
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
+            gap: "20px",
+          }}
+        >
+          {items.map((item) => (
             <div
+              key={item.title}
               style={{
-                fontSize: "48px",
-                marginBottom: "20px",
+                background: "#fff",
+                borderRadius: "18px",
+                padding: "30px",
+                textAlign: "center",
+                boxShadow: "0 10px 25px rgba(0,0,0,.08)",
+                height: "100%",
               }}
             >
-              {item.icon}
+              <div
+                style={{
+                  fontSize: "42px",
+                  marginBottom: "18px",
+                }}
+              >
+                {item.icon}
+              </div>
+
+              <h3
+                style={{
+                  fontSize: "22px",
+                  color: "#111827",
+                  fontWeight: "bold",
+                  marginBottom: "12px",
+                  lineHeight: 1.4,
+                }}
+              >
+                {item.title}
+              </h3>
+
+              <p
+                style={{
+                  color: "#64748b",
+                  lineHeight: "28px",
+                  fontSize: "16px",
+                }}
+              >
+                {item.text}
+              </p>
             </div>
-
-            <h3
-              style={{
-                fontSize: "24px",
-                marginBottom: "12px",
-              }}
-            >
-              {item.title}
-            </h3>
-
-            <p
-              style={{
-                color: "#666",
-                lineHeight: "30px",
-              }}
-            >
-              {item.text}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -13,62 +13,65 @@ export default function Footer() {
           margin: "0 auto",
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-          gap: "40px",
+          gap: "35px",
         }}
       >
         {/* 公司資訊 */}
         <div>
           <h2
             style={{
-              fontSize: "32px",
-              marginBottom: "20px",
+              fontSize: "clamp(28px,6vw,34px)",
+              marginBottom: "18px",
+              fontWeight: "bold",
             }}
           >
-            棟鑫水電
+            ⚡ 棟鑫水電
           </h2>
 
           <p
             style={{
-              lineHeight: "34px",
               color: "#cbd5e1",
+              lineHeight: "30px",
+              fontSize: "16px",
             }}
           >
-            專營：
-            <br />
-            24小時水電急修、跳電維修、漏水處理、
-            <br />
-            抓漏服務、室內配線、水管配置、
-            <br />
-            抽水馬達、沈水馬達、衛浴設備安裝、
-            <br />
-            水塔檢修、水塔清洗。
+            24小時水電急修、跳電維修、漏水處理、抓漏服務、
+            室內配線、水管配置、抽水馬達、沈水馬達、
+            衛浴設備安裝、水塔檢修、水塔清洗。
           </p>
         </div>
 
-        {/* 聯絡方式 */}
+        {/* 聯絡資訊 */}
         <div>
           <h3
             style={{
-              marginBottom: "20px",
+              fontSize: "22px",
+              marginBottom: "18px",
             }}
           >
             聯絡我們
           </h3>
 
-          <p style={{ lineHeight: "36px" }}>
+          <p
+            style={{
+              lineHeight: "32px",
+              color: "#cbd5e1",
+              fontSize: "16px",
+            }}
+          >
             📞 0918-808-209
             <br />
-            📍 服務地區：台北市、新北市
+            📍 台北市・新北市
             <br />
             🕒 24小時全年無休
           </p>
 
           <div
             style={{
-              marginTop: "25px",
+              marginTop: "20px",
               display: "flex",
-              gap: "15px",
               flexWrap: "wrap",
+              gap: "12px",
             }}
           >
             <a
@@ -76,9 +79,9 @@ export default function Footer() {
               style={{
                 background: "#ef4444",
                 color: "#fff",
-                padding: "12px 22px",
-                borderRadius: "10px",
                 textDecoration: "none",
+                padding: "12px 20px",
+                borderRadius: "10px",
                 fontWeight: "bold",
               }}
             >
@@ -92,9 +95,9 @@ export default function Footer() {
               style={{
                 background: "#06C755",
                 color: "#fff",
-                padding: "12px 22px",
-                borderRadius: "10px",
                 textDecoration: "none",
+                padding: "12px 20px",
+                borderRadius: "10px",
                 fontWeight: "bold",
               }}
             >
@@ -103,11 +106,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 服務項目 */}
+        {/* 熱門服務 */}
         <div>
           <h3
             style={{
-              marginBottom: "20px",
+              fontSize: "22px",
+              marginBottom: "18px",
             }}
           >
             熱門服務
@@ -115,16 +119,17 @@ export default function Footer() {
 
           <ul
             style={{
-              lineHeight: "36px",
               color: "#cbd5e1",
+              lineHeight: "30px",
               paddingLeft: "20px",
+              fontSize: "16px",
             }}
           >
             <li>跳電維修</li>
             <li>漏水處理</li>
             <li>抓漏服務</li>
-            <li>水管堵塞疏通</li>
             <li>馬桶不通</li>
+            <li>水管疏通</li>
             <li>抽水馬達更換</li>
             <li>沈水馬達更換</li>
             <li>室內配線</li>
@@ -134,7 +139,7 @@ export default function Footer() {
 
       <hr
         style={{
-          margin: "50px 0 25px",
+          margin: "45px 0 20px",
           borderColor: "#334155",
         }}
       />
@@ -143,9 +148,11 @@ export default function Footer() {
         style={{
           textAlign: "center",
           color: "#94a3b8",
+          fontSize: "15px",
+          lineHeight: "26px",
         }}
       >
-        © 2026 棟鑫水電｜24小時水電急修｜雙北快速到府
+        © 2026 棟鑫水電｜雙北24小時水電急修｜快速到府
       </p>
     </footer>
   );

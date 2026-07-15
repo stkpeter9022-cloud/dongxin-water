@@ -4,48 +4,48 @@ const cases = [
   {
     image: "/case5.jpg",
     title: "水管配置",
-    desc: "冷熱水管重新配置、更新施工。"
+    desc: "冷熱水管重新配置、更新施工。",
   },
   {
     image: "/case7.jpg",
     title: "沈水馬達更換",
-    desc: "沈水抽水馬達更換、安裝與故障排除。"
+    desc: "沈水抽水馬達更換、安裝與故障排除。",
   },
   {
     image: "/case2.jpg",
     title: "衛浴設備安裝",
-    desc: "洗手台、龍頭、馬桶安裝施工。"
+    desc: "洗手台、龍頭、馬桶安裝施工。",
   },
   {
     image: "/case3.jpg",
     title: "配電箱維修",
-    desc: "跳電、漏電、配電箱檢修。"
+    desc: "跳電、漏電、配電箱檢修。",
   },
   {
     image: "/case8.jpg",
     title: "電表底座燒熔更換",
-    desc: "更換燒毀電表底座，恢復安全供電。"
+    desc: "更換燒毀電表底座，恢復安全供電。",
   },
   {
     image: "/case6.jpg",
     title: "抽水馬達更換",
-    desc: "抽水馬達安裝、更換及維修服務。"
+    desc: "抽水馬達安裝、更換及維修服務。",
   },
   {
     image: "/case4.jpg",
     title: "漏水抓漏",
-    desc: "快速找出漏水原因並完成修復。"
+    desc: "快速找出漏水原因並完成修復。",
   },
   {
     image: "/case10.jpg",
     title: "無熔絲開關燒熔更換",
-    desc: "更換燒毀無熔絲開關，排除跳電故障。"
+    desc: "更換燒毀無熔絲開關，排除跳電故障。",
   },
   {
     image: "/case1.jpg",
     title: "排水管疏通",
-    desc: "專業疏通廚房、浴室及排水管堵塞。"
-  }
+    desc: "專業疏通廚房、浴室及排水管堵塞。",
+  },
 ];
 
 export default function Gallery() {
@@ -53,76 +53,100 @@ export default function Gallery() {
     <section
       id="gallery"
       style={{
-        padding: "100px 20px",
+        padding: "70px 20px",
         background: "#f8fafc",
       }}
     >
-      <h2
-        style={{
-          textAlign: "center",
-          fontSize: "42px",
-          fontWeight: "bold",
-          marginBottom: "60px",
-        }}
-      >
-        工程案例
-      </h2>
-
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
-          gap: "30px",
-          maxWidth: "1300px",
+          maxWidth: "1200px",
           margin: "0 auto",
         }}
       >
-        {cases.map((item, index) => (
-          <div
-            key={index}
-            style={{
-              background: "#fff",
-              borderRadius: "18px",
-              overflow: "hidden",
-              boxShadow: "0 8px 25px rgba(0,0,0,.08)",
-              transition: ".3s",
-            }}
-          >
-            <Image
-              src={item.image}
-              alt={item.title}
-              width={600}
-              height={420}
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "clamp(30px,6vw,42px)",
+            fontWeight: "bold",
+            color: "#111827",
+            marginBottom: "15px",
+            lineHeight: 1.3,
+          }}
+        >
+          工程案例
+        </h2>
+
+        <p
+          style={{
+            textAlign: "center",
+            color: "#64748b",
+            marginBottom: "45px",
+            fontSize: "clamp(16px,4vw,18px)",
+          }}
+        >
+          真實施工案例，品質看得見。
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+            gap: "20px",
+          }}
+        >
+          {cases.map((item) => (
+            <div
+              key={item.title}
               style={{
-                width: "100%",
-                height: "260px",
-                objectFit: "cover",
+                background: "#fff",
+                borderRadius: "18px",
+                overflow: "hidden",
+                boxShadow: "0 10px 30px rgba(0,0,0,.08)",
+                height: "100%",
               }}
-            />
-
-            <div style={{ padding: "22px" }}>
-              <h3
+            >
+              <Image
+                src={item.image}
+                alt={item.title}
+                width={600}
+                height={400}
                 style={{
-                  fontSize: "26px",
-                  fontWeight: "bold",
-                  marginBottom: "10px",
+                  width: "100%",
+                  height: "220px",
+                  objectFit: "cover",
+                }}
+              />
+
+              <div
+                style={{
+                  padding: "22px",
                 }}
               >
-                {item.title}
-              </h3>
+                <h3
+                  style={{
+                    fontSize: "22px",
+                    fontWeight: "bold",
+                    color: "#111827",
+                    marginBottom: "10px",
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {item.title}
+                </h3>
 
-              <p
-                style={{
-                  color: "#666",
-                  lineHeight: 1.8,
-                  fontSize: "17px",
-                }}
-              >
-                {item.desc}
-              </p>
+                <p
+                  style={{
+                    color: "#64748b",
+                    fontSize: "16px",
+                    lineHeight: "28px",
+                  }}
+                >
+                  {item.desc}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
