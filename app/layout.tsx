@@ -91,11 +91,11 @@ export default function RootLayout({
     <html lang="zh-TW">
       <head>
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-16737912362"
+          src="https://www.googletagmanager.com/gtag/js?id=G-KQMV13X0NC"
           strategy="afterInteractive"
         />
 
-        <Script id="google-ads" strategy="afterInteractive">
+        <Script id="google-tag" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -103,6 +103,10 @@ export default function RootLayout({
 
             gtag('js', new Date());
 
+            // Google Analytics 4
+            gtag('config', 'G-KQMV13X0NC');
+
+            // Google Ads
             gtag('config', 'AW-16737912362');
             gtag('config', 'AW-18052969763');
           `}
