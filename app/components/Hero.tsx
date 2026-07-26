@@ -34,7 +34,7 @@ export default function Hero() {
     >
       <Image
         src="/case3.jpg"
-        alt="棟鑫水電"
+        alt="棟鑫工程行｜棟鑫水電"
         fill
         priority
         style={{
@@ -55,13 +55,13 @@ export default function Hero() {
         {/* 主標 */}
         <h1
           style={{
-            fontSize: isMobile ? "42px" : "68px",
+            fontSize: isMobile ? "38px" : "64px",
             fontWeight: "bold",
             marginBottom: "12px",
             lineHeight: 1.2,
           }}
         >
-          棟鑫水電
+          棟鑫工程行｜棟鑫水電
         </h1>
 
         {/* 副標 */}
