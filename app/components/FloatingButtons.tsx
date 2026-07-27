@@ -25,7 +25,6 @@ const reportConversion = (
       },
     });
 
-    // 避免 callback 沒回來造成按鈕沒反應
     setTimeout(() => {
       if (newTab) {
         window.open(url, "_blank", "noopener,noreferrer");
@@ -62,9 +61,8 @@ export default function FloatingButtons() {
         onClick={(e) => {
           e.preventDefault();
 
-          // 點選通話
           reportConversion(
-            "AW-16737912362/0JZFCMKfjNEcEKqMoa0-",
+            "AW-16737912362/otUiCMOLjNccEKqMoa0-",
             "tel:0918808209"
           );
         }}
@@ -87,7 +85,6 @@ export default function FloatingButtons() {
         onClick={(e) => {
           e.preventDefault();
 
-          // LINE 聯絡
           reportConversion(
             "AW-16737912362/4txVCMWfjNEcEKqMoa0-",
             "https://line.me/ti/p/ezn_Ad6UpZ",
