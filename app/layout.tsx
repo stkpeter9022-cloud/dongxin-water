@@ -84,12 +84,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="zh-TW">
       <head>
+        {/* Google Tag Manager / Google Ads / GA4 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KQMV13X0NC"
           strategy="afterInteractive"
@@ -98,7 +99,11 @@ export default function RootLayout({
         <Script id="google-tag" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+
+            function gtag() {
+              window.dataLayer.push(arguments);
+            }
+
             window.gtag = gtag;
 
             gtag('js', new Date());
@@ -106,8 +111,10 @@ export default function RootLayout({
             // Google Analytics 4
             gtag('config', 'G-KQMV13X0NC');
 
-            // Google Ads
+            // Google Ads 帳號 1
             gtag('config', 'AW-16737912362');
+
+            // Google Ads 帳號 2
             gtag('config', 'AW-18052969763');
           `}
         </Script>
@@ -115,6 +122,7 @@ export default function RootLayout({
 
       <body>
         {children}
+
         <FloatingButtons />
       </body>
     </html>
