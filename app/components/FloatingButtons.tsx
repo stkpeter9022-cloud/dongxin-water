@@ -19,7 +19,9 @@ const GOOGLE_ADS_1 = {
 // 第二個 Google Ads 帳號
 const GOOGLE_ADS_2 = {
   phone: "AW-18052969763/M6n4CJ6ck9EcEKPqqaBD",
-  line: "AW-18052969763/0oeuCPvejs4cEKPqqaBD",
+
+  // Google Ads「聯絡人 (4)」正式轉換標籤
+  line: "AW-18052969763/OoeuCPvejs4cEKPqqaBD",
 };
 
 // ================================
@@ -57,7 +59,7 @@ export default function FloatingButtons() {
     // 第二個 Google Ads 帳號
     sendConversion(GOOGLE_ADS_2.phone);
 
-    // 稍微等待 Google Ads 發送轉換
+    // 稍微等待轉換事件送出
     setTimeout(() => {
       window.location.href = "tel:0918808209";
     }, 500);
