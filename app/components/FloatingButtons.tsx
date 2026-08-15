@@ -10,32 +10,34 @@ declare global {
 // Google Ads 轉換追蹤
 // ==============================
 
-// 第一個 Google Ads 帳號
+// Google Ads 帳號 1
 const GOOGLE_ADS_1 = {
   phone: "AW-16737912362/otUiCMOLjNccEKqMoa0-",
   line: "AW-16737912362/4txVCMWfjNEcEKqMoa0-",
 };
 
-// 第二個 Google Ads 帳號
+// Google Ads 帳號 2
 const GOOGLE_ADS_2 = {
   phone: "AW-18052969763/M6n4CJ6ck9EcEKPqqaBD",
-  line: "AW-18052969763/0oeuCPvejs4cEKqMoa0-",
+  line: "AW-18052969763/0oeuCPvejs4cEKPqqaBD",
 };
 
+// ==============================
 // 回報電話轉換
+// ==============================
 const reportPhoneConversion = () => {
   if (typeof window === "undefined" || !window.gtag) {
     return;
   }
 
-  // 第一個 Google Ads 帳號
+  // Google Ads 帳號 1
   window.gtag("event", "conversion", {
     send_to: GOOGLE_ADS_1.phone,
     value: 1.0,
     currency: "TWD",
   });
 
-  // 第二個 Google Ads 帳號
+  // Google Ads 帳號 2
   window.gtag("event", "conversion", {
     send_to: GOOGLE_ADS_2.phone,
     value: 1.0,
@@ -43,20 +45,22 @@ const reportPhoneConversion = () => {
   });
 };
 
+// ==============================
 // 回報 LINE 轉換
+// ==============================
 const reportLineConversion = () => {
   if (typeof window === "undefined" || !window.gtag) {
     return;
   }
 
-  // 第一個 Google Ads 帳號
+  // Google Ads 帳號 1
   window.gtag("event", "conversion", {
     send_to: GOOGLE_ADS_1.line,
     value: 1.0,
     currency: "TWD",
   });
 
-  // 第二個 Google Ads 帳號
+  // Google Ads 帳號 2
   window.gtag("event", "conversion", {
     send_to: GOOGLE_ADS_2.line,
     value: 1.0,
@@ -64,35 +68,49 @@ const reportLineConversion = () => {
   });
 };
 
+// ==============================
+// 浮動按鈕
+// ==============================
 export default function FloatingButtons() {
-  const handlePhoneClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // ============================
+  // 電話按鈕
+  // ============================
+  const handlePhoneClick = (
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
     e.preventDefault();
 
-    // 回報兩個 Google Ads 帳號
+    // 同時回報兩個 Google Ads 帳號
     reportPhoneConversion();
 
-    // 稍微等待 Google Ads 發送轉換，再撥電話
+    // 稍微等待轉換事件送出後再撥電話
     setTimeout(() => {
       window.location.href = "tel:0918808209";
     }, 500);
   };
 
-  const handleLineClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // ============================
+  // LINE 按鈕
+  // ============================
+  const handleLineClick = (
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
     e.preventDefault();
 
-    // 先開啟 LINE，避免瀏覽器阻擋新分頁
+    // 回報兩個 Google Ads 帳號的 LINE 轉換
+    reportLineConversion();
+
+    // 開啟 LINE
     const lineWindow = window.open(
       "https://line.me/ti/p/ezn_Ad6UpZ",
       "_blank",
       "noopener,noreferrer"
     );
 
-    // 回報兩個 Google Ads 帳號
-    reportLineConversion();
-
-    // 如果瀏覽器阻擋新視窗，則直接導向 LINE
+    // 如果瀏覽器阻擋新視窗
     if (!lineWindow) {
-      window.location.href = "https://line.me/ti/p/ezn_Ad6UpZ";
+      window.location.href =
+        "https://line.me/ti/p/ezn_Ad6UpZ";
     }
   };
 
@@ -108,9 +126,9 @@ export default function FloatingButtons() {
         boxShadow: "0 -4px 12px rgba(0,0,0,.15)",
       }}
     >
-      {/* ==============================
+      {/* ============================
           電話按鈕
-      ============================== */}
+      ============================ */}
       <a
         href="tel:0918808209"
         onClick={handlePhoneClick}
@@ -128,9 +146,9 @@ export default function FloatingButtons() {
         📞 立即來電
       </a>
 
-      {/* ==============================
+      {/* ============================
           LINE 按鈕
-      ============================== */}
+      ============================ */}
       <a
         href="https://line.me/ti/p/ezn_Ad6UpZ"
         onClick={handleLineClick}
