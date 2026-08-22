@@ -90,7 +90,7 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <head>
-        {/* Google Tag Manager / Google Ads / GA4 */}
+        {/* Google Analytics 4 + Google Ads */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KQMV13X0NC"
           strategy="afterInteractive"
@@ -116,6 +116,9 @@ export default function RootLayout({
 
             // Google Ads 帳號 2
             gtag('config', 'AW-18052969763');
+
+            // Google Ads 新帳號
+            gtag('config', 'AW-18404348972');
           `}
         </Script>
       </head>
