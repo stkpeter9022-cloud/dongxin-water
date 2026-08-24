@@ -19,8 +19,6 @@ const GOOGLE_ADS_1 = {
 // 第二個 Google Ads 帳號
 const GOOGLE_ADS_2 = {
   phone: "AW-18052969763/M6n4CJ6ck9EcEKPqqaBD",
-
-  // Google Ads「聯絡人 (4)」正式轉換標籤
   line: "AW-18052969763/OoeuCPvejs4cEKPqqaBD",
 };
 
@@ -41,6 +39,33 @@ const sendConversion = (sendTo: string) => {
 };
 
 // ================================
+// CONTACT 轉換
+// ================================
+
+const sendContactConversion = (url: string) => {
+  if (typeof window === "undefined" || !window.gtag) {
+    window.location.href = url;
+    return;
+  }
+
+  let navigated = false;
+
+  const goToPhone = () => {
+    if (navigated) return;
+    navigated = true;
+    window.location.href = url;
+  };
+
+  window.gtag("event", "conversion_event_contact", {
+    event_callback: goToPhone,
+    event_timeout: 2000,
+  });
+
+  // 保險機制：2 秒後即使 Google 沒回傳，也照樣撥電話
+  setTimeout(goToPhone, 2000);
+};
+
+// ================================
 // Floating Buttons
 // ================================
 
@@ -53,16 +78,12 @@ export default function FloatingButtons() {
   ) => {
     e.preventDefault();
 
-    // 第一個 Google Ads 帳號
+    // 原本的 Google Ads 電話轉換
     sendConversion(GOOGLE_ADS_1.phone);
-
-    // 第二個 Google Ads 帳號
     sendConversion(GOOGLE_ADS_2.phone);
 
-    // 稍微等待轉換事件送出
-    setTimeout(() => {
-      window.location.href = "tel:0918808209";
-    }, 500);
+    // 新建立的 CONTACT 轉換
+    sendContactConversion("tel:0918808209");
   };
 
   // ------------------------------
