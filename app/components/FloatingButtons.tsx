@@ -7,62 +7,35 @@ declare global {
 }
 
 // ================================
-// Google Ads 轉換設定
-// ================================
-
-// 第一個 Google Ads 帳號
-const GOOGLE_ADS_1 = {
-  phone: "AW-16737912362/otUiCMOLjNccEKqMoa0-",
-  line: "AW-16737912362/4txVCMWfjNEcEKqMoa0-",
-};
-
-// 第二個 Google Ads 帳號
-const GOOGLE_ADS_2 = {
-  phone: "AW-18052969763/M6n4CJ6ck9EcEKPqqaBD",
-  line: "AW-18052969763/OoeuCPvejs4cEKPqqaBD",
-};
-
-// ================================
-// 發送 Google Ads 轉換
-// ================================
-
-const sendConversion = (sendTo: string) => {
-  if (typeof window === "undefined" || !window.gtag) {
-    return;
-  }
-
-  window.gtag("event", "conversion", {
-    send_to: sendTo,
-    value: 1.0,
-    currency: "TWD",
-  });
-};
-
-// ================================
 // CONTACT 轉換
+// GA4 事件：conversion_event_contact
+// Google Ads：CONTACT
 // ================================
 
-const sendContactConversion = (url: string) => {
+const sendContactConversion = (callback?: () => void) => {
+  // 如果 gtag 尚未載入，直接執行後續動作
   if (typeof window === "undefined" || !window.gtag) {
-    window.location.href = url;
+    callback?.();
     return;
   }
 
-  let navigated = false;
+  let completed = false;
 
-  const goToPhone = () => {
-    if (navigated) return;
-    navigated = true;
-    window.location.href = url;
+  const finish = () => {
+    if (completed) return;
+    completed = true;
+    callback?.();
   };
 
   window.gtag("event", "conversion_event_contact", {
-    event_callback: goToPhone,
-    event_timeout: 2000,
+    value: 1,
+    currency: "TWD",
+    event_callback: finish,
+    event_timeout: 1500,
   });
 
-  // 保險機制：2 秒後即使 Google 沒回傳，也照樣撥電話
-  setTimeout(goToPhone, 2000);
+  // 保險機制：最多等 1.5 秒
+  setTimeout(finish, 1500);
 };
 
 // ================================
@@ -73,39 +46,36 @@ export default function FloatingButtons() {
   // ------------------------------
   // 電話按鈕
   // ------------------------------
+
   const handlePhoneClick = (
     e: React.MouseEvent<HTMLAnchorElement>
   ) => {
     e.preventDefault();
 
-    // 原本的 Google Ads 電話轉換
-    sendConversion(GOOGLE_ADS_1.phone);
-    sendConversion(GOOGLE_ADS_2.phone);
+    const phoneUrl = "tel:0918808209";
 
-    // 新建立的 CONTACT 轉換
-    sendContactConversion("tel:0918808209");
+    // 送出 GA4 CONTACT 事件
+    sendContactConversion(() => {
+      window.location.href = phoneUrl;
+    });
   };
 
   // ------------------------------
   // LINE 按鈕
   // ------------------------------
+
   const handleLineClick = (
     e: React.MouseEvent<HTMLAnchorElement>
   ) => {
-    e.preventDefault();
-
     const lineUrl = "https://line.me/ti/p/ezn_Ad6UpZ";
 
-    // 第一個 Google Ads 帳號
-    sendConversion(GOOGLE_ADS_1.line);
+    // 送出 GA4 CONTACT 事件
+    // LINE 同時正常開啟，不等待轉換
+    sendContactConversion();
 
-    // 第二個 Google Ads 帳號
-    sendConversion(GOOGLE_ADS_2.line);
-
-    // 等待轉換事件送出後再開 LINE
-    setTimeout(() => {
-      window.open(lineUrl, "_blank", "noopener,noreferrer");
-    }, 800);
+    // 讓瀏覽器正常開啟 LINE
+    // 不 preventDefault，避免手機瀏覽器阻擋新視窗
+    e.currentTarget.href = lineUrl;
   };
 
   return (
@@ -147,6 +117,8 @@ export default function FloatingButtons() {
 
       <a
         href="https://line.me/ti/p/ezn_Ad6UpZ"
+        target="_blank"
+        rel="noopener noreferrer"
         onClick={handleLineClick}
         style={{
           flex: 1,

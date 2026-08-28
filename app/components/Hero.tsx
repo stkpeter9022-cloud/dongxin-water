@@ -12,7 +12,6 @@ export default function Hero() {
     };
 
     handleResize();
-
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
@@ -22,148 +21,198 @@ export default function Hero() {
     <section
       style={{
         position: "relative",
-        minHeight: "100vh",
-        paddingTop: isMobile ? "110px" : "90px",
+        minHeight: isMobile ? "760px" : "820px",
+        paddingTop: isMobile ? "100px" : "90px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        textAlign: "center",
         overflow: "hidden",
         color: "#fff",
+        background: "#111",
       }}
     >
+      {/* 背景施工照片 */}
       <Image
         src="/case3.jpg"
-        alt="棟鑫工程行"
+        alt="雙北水電工程與裝修施工"
         fill
         priority
+        sizes="100vw"
         style={{
           objectFit: "cover",
-          filter: "brightness(40%)",
+          objectPosition: "center",
+          filter: "brightness(42%)",
         }}
       />
 
+      {/* 深色漸層，增加文字可讀性 */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.82) 100%)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* 內容 */}
       <div
         style={{
           position: "relative",
           zIndex: 2,
           width: "100%",
-          maxWidth: "1100px",
-          padding: isMobile ? "20px" : "40px",
+          maxWidth: "1180px",
+          padding: isMobile ? "30px 22px" : "60px 40px",
+          margin: "0 auto",
         }}
       >
-        {/* 主標 */}
-        <h1
+        {/* 上方標籤 */}
+        <div
           style={{
-            fontSize: isMobile ? "38px" : "64px",
-            fontWeight: "bold",
-            marginBottom: "12px",
-            lineHeight: 1.2,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "9px 16px",
+            marginBottom: "22px",
+            border: "1px solid rgba(255,255,255,.28)",
+            background: "rgba(255,255,255,.10)",
+            backdropFilter: "blur(10px)",
+            borderRadius: "999px",
+            fontSize: isMobile ? "14px" : "16px",
+            fontWeight: 600,
+            letterSpacing: "1px",
           }}
         >
-          棟鑫工程行
+          <span
+            style={{
+              width: "8px",
+              height: "8px",
+              borderRadius: "50%",
+              background: "#F5B942",
+              boxShadow: "0 0 10px rgba(245,185,66,.8)",
+            }}
+          />
+          雙北專業水電工程團隊
+        </div>
+
+        {/* H1 */}
+        <h1
+          style={{
+            fontSize: isMobile ? "39px" : "68px",
+            lineHeight: 1.15,
+            fontWeight: 800,
+            letterSpacing: isMobile ? "-1px" : "-2px",
+            margin: "0 0 20px",
+            maxWidth: "900px",
+          }}
+        >
+          水電工程 × 裝修工程
+          <br />
+          <span style={{ color: "#F5B942" }}>
+            專業施工，一次處理
+          </span>
         </h1>
 
         {/* 副標 */}
-        <h2
+        <p
           style={{
-            color: "#FFD54A",
-            fontSize: isMobile ? "22px" : "42px",
-            fontWeight: "bold",
-            lineHeight: 1.5,
-            marginBottom: "30px",
+            fontSize: isMobile ? "18px" : "25px",
+            lineHeight: 1.7,
+            fontWeight: 500,
+            color: "rgba(255,255,255,.92)",
+            margin: "0 0 30px",
+            maxWidth: "780px",
           }}
         >
-          24小時水電急修
+          室內配線、給排水、衛浴工程、配電工程、裝修水電，
           <br />
-          雙北快速到府
-        </h2>
+          也提供 24 小時水電緊急維修服務。
+        </p>
 
-        {/* 服務項目 */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)",
-            gap: isMobile ? "10px" : "16px",
-            maxWidth: isMobile ? "360px" : "900px",
-            margin: "0 auto 35px",
-            fontSize: isMobile ? "17px" : "26px",
-            fontWeight: "bold",
-          }}
-        >
-          <span>跳電維修</span>
-          <span>漏水處理</span>
-          <span>抓漏服務</span>
-          <span>衛浴設備</span>
-          <span>水塔檢修</span>
-          <span>水管疏通</span>
-          <span>馬桶不通</span>
-          <span>馬達維修</span>
-        </div>
-
-        {/* 特色 */}
+        {/* 服務分類 */}
         <div
           style={{
             display: "flex",
-            justifyContent: "center",
-            gap: "12px",
             flexWrap: "wrap",
-            marginBottom: "35px",
+            gap: "10px",
+            maxWidth: "850px",
+            marginBottom: "34px",
           }}
         >
-          <div
-            style={{
-              background: "rgba(255,255,255,.18)",
-              backdropFilter: "blur(8px)",
-              padding: isMobile ? "10px 16px" : "12px 28px",
-              borderRadius: "999px",
-              fontSize: isMobile ? "14px" : "18px",
-            }}
-          >
-            🚚 24H快速到府
-          </div>
-
-          <div
-            style={{
-              background: "rgba(255,255,255,.18)",
-              backdropFilter: "blur(8px)",
-              padding: isMobile ? "10px 16px" : "12px 28px",
-              borderRadius: "999px",
-              fontSize: isMobile ? "14px" : "18px",
-            }}
-          >
-            🛠️ 專業施工保固
-          </div>
+          {[
+            "室內配線",
+            "配電工程",
+            "給排水工程",
+            "衛浴工程",
+            "裝修水電",
+            "漏水抓漏",
+            "馬達設備",
+            "24H緊急維修",
+          ].map((item) => (
+            <span
+              key={item}
+              style={{
+                padding: isMobile ? "9px 13px" : "10px 17px",
+                borderRadius: "8px",
+                background: "rgba(255,255,255,.11)",
+                border: "1px solid rgba(255,255,255,.18)",
+                backdropFilter: "blur(8px)",
+                fontSize: isMobile ? "14px" : "16px",
+                fontWeight: 600,
+              }}
+            >
+              {item}
+            </span>
+          ))}
         </div>
 
-        {/* 按鈕 */}
+        {/* 信任資訊 */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: isMobile ? "12px" : "24px",
+            marginBottom: "34px",
+            color: "rgba(255,255,255,.9)",
+            fontSize: isMobile ? "14px" : "16px",
+            fontWeight: 500,
+          }}
+        >
+          <span>✓ 雙北到府服務</span>
+          <span>✓ 現場評估報價</span>
+          <span>✓ 專業施工</span>
+          <span>✓ 24H緊急維修</span>
+        </div>
+
+        {/* CTA */}
         <div
           style={{
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "18px",
+            gap: "14px",
+            width: "100%",
+            maxWidth: "600px",
           }}
         >
           <a
             href="tel:0918808209"
             style={{
-              width: isMobile ? "100%" : "260px",
-              maxWidth: "320px",
-              height: "60px",
+              flex: 1,
+              minHeight: "62px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              background: "#ef4444",
-              color: "#fff",
-              borderRadius: "14px",
+              background: "#F5B942",
+              color: "#111",
+              borderRadius: "10px",
               textDecoration: "none",
-              fontWeight: "bold",
-              fontSize: isMobile ? "18px" : "24px",
+              fontWeight: 800,
+              fontSize: isMobile ? "19px" : "21px",
+              boxShadow: "0 10px 30px rgba(0,0,0,.25)",
             }}
           >
-            📞 立即來電
+            📞 立即電話諮詢
           </a>
 
           <a
@@ -171,23 +220,34 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              width: isMobile ? "100%" : "260px",
-              maxWidth: "320px",
-              height: "60px",
+              flex: 1,
+              minHeight: "62px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               background: "#06C755",
               color: "#fff",
-              borderRadius: "14px",
+              borderRadius: "10px",
               textDecoration: "none",
-              fontWeight: "bold",
-              fontSize: isMobile ? "18px" : "24px",
+              fontWeight: 800,
+              fontSize: isMobile ? "19px" : "21px",
+              boxShadow: "0 10px 30px rgba(0,0,0,.25)",
             }}
           >
-            💬 LINE立即詢問
+            💬 LINE 工程諮詢
           </a>
         </div>
+
+        {/* 底部小字 */}
+        <p
+          style={{
+            marginTop: "20px",
+            fontSize: isMobile ? "13px" : "14px",
+            color: "rgba(255,255,255,.65)",
+          }}
+        >
+          維修、翻修、裝修水電皆可諮詢，實際工程內容依現場條件評估
+        </p>
       </div>
     </section>
   );

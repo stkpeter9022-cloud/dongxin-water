@@ -3,25 +3,26 @@ export default function GoogleReviews() {
     {
       name: "王先生",
       stars: "★★★★★",
-      text: "半夜跳電打電話不到一小時就到，師傅很專業，價格也很透明。",
+      text: "半夜跳電打電話後很快就安排師傅到場，處理速度快，施工也很仔細。",
     },
     {
       name: "林小姐",
       stars: "★★★★★",
-      text: "浴室漏水很快就找到原因，施工乾淨，值得推薦。",
+      text: "浴室漏水到府檢查後很快找到問題，施工過程說明清楚，整體服務很好。",
     },
     {
       name: "陳先生",
       stars: "★★★★★",
-      text: "馬桶堵塞處理速度非常快，服務態度很好，下次還會找棟鑫。",
+      text: "馬桶堵塞很快處理完成，師傅態度很好，現場也會說明處理方式。",
     },
   ];
 
   return (
     <section
       style={{
-        background: "#f8fafc",
-        padding: "70px 20px",
+        padding: "110px 20px",
+        background: "#111827",
+        color: "#fff",
       }}
     >
       <div
@@ -30,116 +31,172 @@ export default function GoogleReviews() {
           margin: "0 auto",
         }}
       >
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: "clamp(30px,6vw,42px)",
-            fontWeight: "bold",
-            color: "#111827",
-            marginBottom: "15px",
-            lineHeight: 1.3,
-          }}
-        >
-          Google 五星好評
-        </h2>
-
-        <p
-          style={{
-            textAlign: "center",
-            color: "#64748b",
-            marginBottom: "20px",
-            fontSize: "clamp(16px,4vw,18px)",
-          }}
-        >
-          客戶真實回饋，安心選擇棟鑫水電
-        </p>
-
+        {/* 標題 */}
         <div
           style={{
             textAlign: "center",
-            marginBottom: "45px",
+            marginBottom: "55px",
           }}
         >
           <div
             style={{
-              fontSize: "clamp(38px,8vw,60px)",
-              lineHeight: 1,
+              display: "inline-block",
+              padding: "7px 16px",
+              borderRadius: "999px",
+              background: "rgba(214,165,44,.12)",
+              color: "#e2b84b",
+              fontSize: "14px",
+              fontWeight: 700,
+              letterSpacing: "1px",
+              marginBottom: "16px",
             }}
           >
-            ⭐⭐⭐⭐⭐
+            CUSTOMER REVIEWS
           </div>
 
-          <h3
+          <h2
             style={{
-              fontSize: "clamp(34px,8vw,48px)",
-              margin: "12px 0",
-              color: "#2563eb",
-              fontWeight: "bold",
+              margin: "0 0 16px",
+              fontSize: "clamp(32px, 6vw, 46px)",
+              fontWeight: 800,
+              lineHeight: 1.2,
             }}
           >
-            5.0
-          </h3>
+            客戶真實評價
+          </h2>
 
           <p
             style={{
-              color: "#64748b",
-              fontSize: "16px",
+              maxWidth: "680px",
+              margin: "0 auto",
+              color: "#cbd5e1",
+              fontSize: "clamp(16px, 4vw, 18px)",
+              lineHeight: 1.8,
             }}
           >
-            Google 使用者推薦
+            每一次施工都重視現場狀況、施工品質與客戶溝通，
+            <br />
+            透過實際服務累積客戶的信任與推薦。
           </p>
         </div>
 
+        {/* Google 評分 */}
+        <div
+          style={{
+            maxWidth: "420px",
+            margin: "0 auto 55px",
+            padding: "30px",
+            textAlign: "center",
+            borderRadius: "18px",
+            background: "#1f2937",
+            border: "1px solid rgba(255,255,255,.08)",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "28px",
+              letterSpacing: "4px",
+              marginBottom: "12px",
+            }}
+          >
+            ★★★★★
+          </div>
+
+          <div
+            style={{
+              fontSize: "52px",
+              fontWeight: 800,
+              lineHeight: 1,
+              color: "#e2b84b",
+              marginBottom: "10px",
+            }}
+          >
+            5.0
+          </div>
+
+          <div
+            style={{
+              color: "#cbd5e1",
+              fontSize: "15px",
+            }}
+          >
+            Google 客戶評價
+          </div>
+        </div>
+
+        {/* 評價卡片 */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-            gap: "20px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "22px",
           }}
         >
           {reviews.map((review) => (
-            <div
+            <article
               key={review.name}
               style={{
                 background: "#fff",
+                color: "#111827",
                 borderRadius: "18px",
-                padding: "28px",
-                boxShadow: "0 10px 30px rgba(0,0,0,.08)",
-                height: "100%",
+                padding: "30px",
+                minHeight: "230px",
+                boxShadow: "0 12px 30px rgba(0,0,0,.18)",
               }}
             >
               <div
                 style={{
-                  fontSize: "22px",
-                  color: "#f59e0b",
-                  marginBottom: "12px",
+                  color: "#d6a52c",
+                  fontSize: "20px",
+                  letterSpacing: "2px",
+                  marginBottom: "18px",
                 }}
               >
                 {review.stars}
               </div>
 
-              <h4
+              <p
                 style={{
-                  fontSize: "22px",
-                  fontWeight: "bold",
+                  margin: "0 0 24px",
+                  color: "#475569",
+                  fontSize: "16px",
+                  lineHeight: 1.85,
+                }}
+              >
+                「{review.text}」
+              </p>
+
+              <div
+                style={{
+                  paddingTop: "18px",
+                  borderTop: "1px solid #e5e7eb",
+                  fontWeight: 800,
                   color: "#111827",
-                  marginBottom: "12px",
                 }}
               >
                 {review.name}
-              </h4>
-
-              <p
-                style={{
-                  color: "#64748b",
-                  fontSize: "16px",
-                  lineHeight: "28px",
-                }}
-              >
-                {review.text}
-              </p>
-            </div>
+              </div>
+            </article>
           ))}
+        </div>
+
+        {/* 底部信任訊息 */}
+        <div
+          style={{
+            marginTop: "55px",
+            textAlign: "center",
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              color: "#cbd5e1",
+              fontSize: "15px",
+              lineHeight: 1.8,
+            }}
+          >
+            水電維修・裝修水電・室內配線・給排水・衛浴工程
+          </p>
         </div>
       </div>
     </section>
