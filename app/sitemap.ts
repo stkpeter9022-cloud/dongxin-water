@@ -10,40 +10,71 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "daily",
       priority: 1,
     },
-
     {
       url: `${baseUrl}/lou-shui`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
-
+    {
+      url: `${baseUrl}/zhua-lou`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
     {
       url: `${baseUrl}/tiao-dian`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/shui-guan`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/ma-tong`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
-
+    {
+      url: `${baseUrl}/chou-shui-ma-da`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
     {
       url: `${baseUrl}/shen-shui-ma-da`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/shi-nei-pei-xian`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/wei-yu`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
   ];
 }

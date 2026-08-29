@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://dongxin24.com/sitemap.xml",
+    sitemap: "https://www.dongxin24.com/sitemap.xml",
   };
 }
