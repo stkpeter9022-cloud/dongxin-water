@@ -3,37 +3,39 @@ export default function Process() {
     {
       number: "01",
       icon: "📞",
-      title: "聯繫諮詢",
-      desc: "透過電話或 LINE 聯絡，說明維修狀況或工程需求，也可以直接提供現場照片。",
+      title: "聯繫與需求確認",
+      desc: "可透過電話或 LINE 說明水電問題、工程需求，也可以先提供現場照片、設備型號或施工圖面。",
     },
     {
       number: "02",
       icon: "🔍",
-      title: "現場勘查",
-      desc: "依案件需求安排現場確認，了解空間、管線、電路及施工條件。",
+      title: "現場檢查與評估",
+      desc: "依案件需求安排到場確認，檢查現場空間、既有管線、電路、設備及實際施工條件。",
     },
     {
       number: "03",
       icon: "📋",
-      title: "規劃與報價",
-      desc: "依現場狀況規劃施工方式，確認工程內容、材料及費用後提供報價。",
+      title: "施工方式與報價",
+      desc: "依現場實際狀況說明建議的處理方式、施工內容與相關費用；較大型工程則依項目及材料內容進行估價。",
     },
     {
       number: "04",
       icon: "🛠️",
-      title: "專業施工",
-      desc: "確認施工內容後進場施工，依工程需求進行水電、裝修及設備工程。",
+      title: "安排專業施工",
+      desc: "確認施工內容後安排進場，依案件需求進行水電維修、室內配線、給排水、衛浴或相關設備工程。",
     },
     {
       number: "05",
       icon: "✓",
-      title: "完工驗收",
-      desc: "施工完成後確認工程狀況，依實際工程內容提供後續售後與保固服務。",
+      title: "完工確認",
+      desc: "施工完成後確認處理項目與現場狀況，不同工程依施工內容、材料及約定提供相應的售後服務。",
     },
   ];
 
   return (
     <section
+      id="process"
+      aria-labelledby="process-title"
       style={{
         padding: "100px 20px",
         background: "#ffffff",
@@ -69,6 +71,7 @@ export default function Process() {
           </div>
 
           <h2
+            id="process-title"
             style={{
               margin: "0 0 16px",
               fontSize: "clamp(32px, 6vw, 46px)",
@@ -77,21 +80,20 @@ export default function Process() {
               lineHeight: 1.2,
             }}
           >
-            從現場評估到完工
+            雙北水電工程服務流程
           </h2>
 
           <p
             style={{
-              maxWidth: "720px",
+              maxWidth: "760px",
               margin: "0 auto",
               color: "#64748b",
               fontSize: "clamp(16px, 4vw, 18px)",
               lineHeight: 1.8,
             }}
           >
-            無論是緊急維修、住宅翻修或裝修水電工程，
-            <br />
-            依照實際需求安排專業施工。
+            從緊急水電維修、設備故障到住宅翻修與裝修水電工程，
+            依現場狀況確認需求，再安排適合的施工方式。
           </p>
         </div>
 
@@ -99,12 +101,13 @@ export default function Process() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(210px, 1fr))",
             gap: "18px",
           }}
         >
           {steps.map((step) => (
-            <div
+            <article
               key={step.number}
               style={{
                 position: "relative",
@@ -117,6 +120,7 @@ export default function Process() {
             >
               {/* 編號 */}
               <div
+                aria-hidden="true"
                 style={{
                   position: "absolute",
                   top: "20px",
@@ -132,6 +136,7 @@ export default function Process() {
 
               {/* Icon */}
               <div
+                aria-hidden="true"
                 style={{
                   width: "60px",
                   height: "60px",
@@ -170,15 +175,15 @@ export default function Process() {
               >
                 {step.desc}
               </p>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* 緊急維修 CTA */}
+        {/* CTA */}
         <div
           style={{
             marginTop: "55px",
-            padding: "28px 30px",
+            padding: "30px",
             borderRadius: "18px",
             background: "#111827",
             display: "flex",
@@ -188,7 +193,11 @@ export default function Process() {
             flexWrap: "wrap",
           }}
         >
-          <div>
+          <div
+            style={{
+              flex: "1 1 420px",
+            }}
+          >
             <h3
               style={{
                 margin: "0 0 8px",
@@ -197,7 +206,7 @@ export default function Process() {
                 fontWeight: 800,
               }}
             >
-              緊急水電問題需要立即處理？
+              有水電問題或工程需求？
             </h3>
 
             <p
@@ -205,32 +214,63 @@ export default function Process() {
                 margin: 0,
                 color: "#cbd5e1",
                 fontSize: "15px",
-                lineHeight: 1.7,
+                lineHeight: 1.75,
               }}
             >
-              跳電、漏水、馬桶堵塞、水管異常等問題，可直接聯繫我們。
+              跳電、漏水、馬桶、水管、馬達、配線及裝修水電需求，
+              可先來電或透過 LINE 提供現場資料。
             </p>
           </div>
 
-          <a
-            href="tel:0918808209"
+          <div
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minWidth: "190px",
-              height: "54px",
-              padding: "0 24px",
-              borderRadius: "10px",
-              background: "#d6a52c",
-              color: "#111827",
-              textDecoration: "none",
-              fontWeight: 800,
-              fontSize: "17px",
+              display: "flex",
+              gap: "10px",
+              flexWrap: "wrap",
             }}
           >
-            📞 立即聯絡
-          </a>
+            <a
+              href="tel:0918808209"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: "175px",
+                height: "52px",
+                padding: "0 22px",
+                borderRadius: "8px",
+                background: "#d6a52c",
+                color: "#111827",
+                textDecoration: "none",
+                fontWeight: 800,
+                fontSize: "16px",
+              }}
+            >
+              📞 立即來電
+            </a>
+
+            <a
+              href="https://line.me/ti/p/ezn_Ad6UpZ"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: "175px",
+                height: "52px",
+                padding: "0 22px",
+                borderRadius: "8px",
+                background: "#06C755",
+                color: "#fff",
+                textDecoration: "none",
+                fontWeight: 800,
+                fontSize: "16px",
+              }}
+            >
+              💬 LINE 傳照片
+            </a>
+          </div>
         </div>
       </div>
     </section>

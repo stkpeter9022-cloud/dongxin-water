@@ -19,6 +19,8 @@ export default function GoogleReviews() {
 
   return (
     <section
+      id="reviews"
+      aria-labelledby="reviews-title"
       style={{
         padding: "110px 20px",
         background: "#111827",
@@ -55,6 +57,7 @@ export default function GoogleReviews() {
           </div>
 
           <h2
+            id="reviews-title"
             style={{
               margin: "0 0 16px",
               fontSize: "clamp(32px, 6vw, 46px)",
@@ -62,28 +65,28 @@ export default function GoogleReviews() {
               lineHeight: 1.2,
             }}
           >
-            客戶真實評價
+            棟鑫水電客戶評價
           </h2>
 
           <p
             style={{
-              maxWidth: "680px",
+              maxWidth: "720px",
               margin: "0 auto",
               color: "#cbd5e1",
               fontSize: "clamp(16px, 4vw, 18px)",
               lineHeight: 1.8,
             }}
           >
-            每一次施工都重視現場狀況、施工品質與客戶溝通，
-            <br />
-            透過實際服務累積客戶的信任與推薦。
+            服務台北市、新北市水電維修與工程案件，
+            重視現場判斷、施工品質與溝通說明，
+            每一次施工都以實際需求與現場狀況為優先。
           </p>
         </div>
 
-        {/* Google 評分 */}
+        {/* Google 評價摘要 */}
         <div
           style={{
-            maxWidth: "420px",
+            maxWidth: "440px",
             margin: "0 auto 55px",
             padding: "30px",
             textAlign: "center",
@@ -93,10 +96,12 @@ export default function GoogleReviews() {
           }}
         >
           <div
+            aria-label="5 顆星"
             style={{
               fontSize: "28px",
               letterSpacing: "4px",
               marginBottom: "12px",
+              color: "#e2b84b",
             }}
           >
             ★★★★★
@@ -128,7 +133,8 @@ export default function GoogleReviews() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "22px",
           }}
         >
@@ -145,6 +151,7 @@ export default function GoogleReviews() {
               }}
             >
               <div
+                aria-label="5 顆星"
                 style={{
                   color: "#d6a52c",
                   fontSize: "20px",
@@ -180,13 +187,25 @@ export default function GoogleReviews() {
           ))}
         </div>
 
-        {/* 底部信任訊息 */}
+        {/* 信任訊息 */}
         <div
           style={{
-            marginTop: "55px",
+            maxWidth: "800px",
+            margin: "55px auto 0",
             textAlign: "center",
           }}
         >
+          <h3
+            style={{
+              margin: "0 0 12px",
+              fontSize: "21px",
+              fontWeight: 800,
+              color: "#fff",
+            }}
+          >
+            雙北水電維修與工程服務
+          </h3>
+
           <p
             style={{
               margin: 0,
@@ -195,7 +214,8 @@ export default function GoogleReviews() {
               lineHeight: 1.8,
             }}
           >
-            水電維修・裝修水電・室內配線・給排水・衛浴工程
+            水電維修・跳電處理・漏水抓漏・水管疏通・
+            室內配線・馬達設備・給排水・衛浴工程
           </p>
         </div>
       </div>

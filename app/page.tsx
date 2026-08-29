@@ -9,7 +9,6 @@ import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 import Areas from "./components/Areas";
 import Footer from "./components/Footer";
-import FloatingButtons from "./components/FloatingButtons";
 import Schema from "./components/Schema";
 
 export default function Home() {
@@ -40,8 +39,6 @@ export default function Home() {
       </main>
 
       <Footer />
-
-      <FloatingButtons />
     </>
   );
 }

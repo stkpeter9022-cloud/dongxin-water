@@ -3,31 +3,33 @@ export default function WhyUs() {
     {
       number: "01",
       icon: "⚡",
-      title: "24H 水電急修",
-      text: "跳電、漏水、馬桶堵塞、水管異常等緊急狀況，提供全天候到府處理。",
+      title: "24H 緊急水電聯絡",
+      text: "跳電、漏水、馬桶堵塞、水管異常及設備故障等緊急狀況，可隨時聯絡，依案件位置與當日派工狀況安排處理。",
     },
     {
       number: "02",
       icon: "🏠",
-      title: "維修・裝修都能做",
-      text: "不只處理緊急維修，也承接室內配線、配電、給排水、衛浴及裝修水電工程。",
+      title: "維修・工程都能處理",
+      text: "不只處理日常水電維修，也承接室內配線、配電、給排水、衛浴及住宅裝修水電工程。",
     },
     {
       number: "03",
       icon: "📋",
-      title: "現場確認再報價",
-      text: "施工前先了解現場狀況與工程需求，確認施工內容及費用後再進行。",
+      title: "依現場狀況評估",
+      text: "先了解現場問題、設備與施工條件，再說明建議處理方式及相關費用，較大型工程依實際項目進行估價。",
     },
     {
       number: "04",
       icon: "🛠️",
-      title: "專業施工與售後",
-      text: "依照工程需求選用合適材料與施工方式，完成後提供完善的售後服務。",
+      title: "施工與後續服務",
+      text: "依工程內容與現場條件安排施工方式，不同工程項目依材料、施工內容及約定提供相應的後續服務。",
     },
   ];
 
   return (
     <section
+      id="why-us"
+      aria-labelledby="why-us-title"
       style={{
         position: "relative",
         padding: "100px 20px",
@@ -37,6 +39,7 @@ export default function WhyUs() {
     >
       {/* 背景裝飾 */}
       <div
+        aria-hidden="true"
         style={{
           position: "absolute",
           top: "-120px",
@@ -49,6 +52,7 @@ export default function WhyUs() {
       />
 
       <div
+        aria-hidden="true"
         style={{
           position: "absolute",
           bottom: "-150px",
@@ -92,6 +96,7 @@ export default function WhyUs() {
           </div>
 
           <h2
+            id="why-us-title"
             style={{
               margin: "0 0 18px",
               color: "#fff",
@@ -100,34 +105,34 @@ export default function WhyUs() {
               lineHeight: 1.2,
             }}
           >
-            為什麼選擇我們？
+            為什麼選擇棟鑫水電？
           </h2>
 
           <p
             style={{
-              maxWidth: "720px",
+              maxWidth: "760px",
               margin: "0 auto",
               color: "#cbd5e1",
               fontSize: "clamp(16px, 4vw, 18px)",
               lineHeight: 1.8,
             }}
           >
-            從緊急維修到完整裝修水電工程，
-            <br />
-            以專業施工、清楚溝通與合理報價，協助您解決水電問題。
+            服務台北市、新北市，從緊急水電維修到住宅裝修工程，
+            依現場狀況確認需求、施工內容與處理方式。
           </p>
         </div>
 
-        {/* 四大優勢 */}
+        {/* 四大特色 */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(260px, 1fr))",
             gap: "20px",
           }}
         >
           {items.map((item) => (
-            <div
+            <article
               key={item.number}
               style={{
                 position: "relative",
@@ -141,6 +146,7 @@ export default function WhyUs() {
             >
               {/* 編號 */}
               <div
+                aria-hidden="true"
                 style={{
                   position: "absolute",
                   top: "22px",
@@ -156,6 +162,7 @@ export default function WhyUs() {
 
               {/* Icon */}
               <div
+                aria-hidden="true"
                 style={{
                   width: "58px",
                   height: "58px",
@@ -193,34 +200,42 @@ export default function WhyUs() {
               >
                 {item.text}
               </p>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* 底部強化訊息 */}
+        {/* 底部資訊 */}
         <div
           style={{
             marginTop: "45px",
-            padding: "25px 28px",
+            padding: "26px 28px",
             borderRadius: "16px",
             background: "rgba(255,255,255,.05)",
             border: "1px solid rgba(255,255,255,.08)",
             textAlign: "center",
           }}
         >
+          <h3
+            style={{
+              margin: "0 0 10px",
+              color: "#e2b84b",
+              fontSize: "18px",
+              fontWeight: 800,
+            }}
+          >
+            台北・新北水電維修與工程服務
+          </h3>
+
           <p
             style={{
               margin: 0,
               color: "#e5e7eb",
-              fontSize: "16px",
+              fontSize: "15px",
               lineHeight: 1.8,
             }}
           >
-            <strong style={{ color: "#e2b84b" }}>
-              雙北地區水電工程服務
-            </strong>
-            {"　"}
-            維修｜裝修｜配線｜配電｜給排水｜衛浴工程
+            緊急維修・室內配線・配電工程・給排水工程・
+            衛浴工程・馬達設備・裝修水電
           </p>
         </div>
       </div>

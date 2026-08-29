@@ -6,14 +6,16 @@ declare global {
   }
 }
 
-// ================================
-// CONTACT 轉換
-// GA4 事件：conversion_event_contact
+// =====================================
+// Google Ads / GA4 主要 CONTACT 轉換
+// GA4：conversion_event_contact
 // Google Ads：CONTACT
-// ================================
+// =====================================
 
-const sendContactConversion = (callback?: () => void) => {
-  // 如果 gtag 尚未載入，直接執行後續動作
+const sendContactConversion = (
+  contactMethod: "phone" | "line",
+  callback?: () => void
+) => {
   if (typeof window === "undefined" || !window.gtag) {
     callback?.();
     return;
@@ -27,59 +29,71 @@ const sendContactConversion = (callback?: () => void) => {
     callback?.();
   };
 
+  // -------------------------------------
+  // 1. Google Ads 主要 CONTACT 轉換
+  // -------------------------------------
+
   window.gtag("event", "conversion_event_contact", {
     value: 1,
     currency: "TWD",
+    contact_method: contactMethod,
     event_callback: finish,
-    event_timeout: 1500,
+    event_timeout: 1200,
   });
 
-  // 保險機制：最多等 1.5 秒
-  setTimeout(finish, 1500);
+  // -------------------------------------
+  // 2. GA4 分析事件
+  // 不設定成 Google Ads 主要轉換
+  // -------------------------------------
+
+  window.gtag(
+    "event",
+    contactMethod === "phone" ? "click_phone" : "click_line",
+    {
+      contact_method: contactMethod,
+    }
+  );
+
+  // 避免電話連結等待過久
+  setTimeout(finish, 1200);
 };
 
-// ================================
+// =====================================
 // Floating Buttons
-// ================================
+// =====================================
 
 export default function FloatingButtons() {
-  // ------------------------------
-  // 電話按鈕
-  // ------------------------------
+  // =====================================
+  // 電話
+  // =====================================
 
   const handlePhoneClick = (
     e: React.MouseEvent<HTMLAnchorElement>
   ) => {
     e.preventDefault();
 
-    const phoneUrl = "tel:0918808209";
-
-    // 送出 GA4 CONTACT 事件
-    sendContactConversion(() => {
-      window.location.href = phoneUrl;
+    sendContactConversion("phone", () => {
+      window.location.href = "tel:0918808209";
     });
   };
 
-  // ------------------------------
-  // LINE 按鈕
-  // ------------------------------
+  // =====================================
+  // LINE
+  // =====================================
 
   const handleLineClick = (
     e: React.MouseEvent<HTMLAnchorElement>
   ) => {
-    const lineUrl = "https://line.me/ti/p/ezn_Ad6UpZ";
+    // LINE 使用 target="_blank"
+    // 不 preventDefault
+    // 避免部分手機瀏覽器阻擋開啟 LINE
 
-    // 送出 GA4 CONTACT 事件
-    // LINE 同時正常開啟，不等待轉換
-    sendContactConversion();
-
-    // 讓瀏覽器正常開啟 LINE
-    // 不 preventDefault，避免手機瀏覽器阻擋新視窗
-    e.currentTarget.href = lineUrl;
+    sendContactConversion("line");
   };
 
   return (
-    <div
+    <nav
+      aria-label="快速聯絡"
       style={{
         position: "fixed",
         bottom: 0,
@@ -87,52 +101,58 @@ export default function FloatingButtons() {
         width: "100%",
         display: "flex",
         zIndex: 9999,
-        boxShadow: "0 -4px 12px rgba(0,0,0,.15)",
+        boxShadow: "0 -4px 16px rgba(0,0,0,.18)",
       }}
     >
-      {/* ========================= */}
       {/* 電話 */}
-      {/* ========================= */}
-
       <a
         href="tel:0918808209"
         onClick={handlePhoneClick}
+        aria-label="立即致電棟鑫水電"
         style={{
           flex: 1,
-          background: "#ef4444",
+          minHeight: "62px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#111827",
           color: "#fff",
           textAlign: "center",
-          padding: "18px",
+          padding: "14px 12px",
           textDecoration: "none",
-          fontWeight: "bold",
-          fontSize: "20px",
+          fontWeight: 800,
+          fontSize: "18px",
+          borderTop: "3px solid #d6a52c",
         }}
       >
         📞 立即來電
       </a>
 
-      {/* ========================= */}
       {/* LINE */}
-      {/* ========================= */}
-
       <a
         href="https://line.me/ti/p/ezn_Ad6UpZ"
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleLineClick}
+        aria-label="透過 LINE 聯絡棟鑫水電"
         style={{
           flex: 1,
+          minHeight: "62px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           background: "#06C755",
           color: "#fff",
           textAlign: "center",
-          padding: "18px",
+          padding: "14px 12px",
           textDecoration: "none",
-          fontWeight: "bold",
-          fontSize: "20px",
+          fontWeight: 800,
+          fontSize: "18px",
+          borderTop: "3px solid #06C755",
         }}
       >
         💬 LINE立即詢問
       </a>
-    </div>
+    </nav>
   );
 }

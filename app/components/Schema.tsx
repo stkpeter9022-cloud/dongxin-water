@@ -1,20 +1,21 @@
 export default function Schema() {
   const schema = {
     "@context": "https://schema.org",
-    "@type": "Plumber",
+
+    "@type": ["Plumber", "Electrician"],
 
     name: "棟鑫水電",
-    url: "https://dongxin24.com",
 
-    image: "https://dongxin24.com/icon.png",
-    logo: "https://dongxin24.com/icon.png",
+    url: "https://www.dongxin24.com/",
+
+    image: "https://www.dongxin24.com/icon.png",
+
+    logo: "https://www.dongxin24.com/icon.png",
 
     telephone: "+886918808209",
 
     description:
-      "棟鑫水電提供台北市、新北市水電工程、裝修水電、室內配線、配電工程、給排水工程、衛浴工程及24小時水電緊急維修服務。",
-
-    priceRange: "$$",
+      "棟鑫水電提供台北市、新北市雙北地區24小時水電維修與水電工程服務，專業處理水電急修、跳電維修、漏水抓漏、水管疏通、馬桶不通、抽水馬達、加壓馬達、室內配線、配電箱、給排水及衛浴工程。",
 
     areaServed: [
       {
@@ -51,16 +52,10 @@ export default function Schema() {
 
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "水電與裝修工程服務",
+
+      name: "棟鑫水電服務項目",
 
       itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "水電維修",
-          },
-        },
         {
           "@type": "Offer",
           itemOffered: {
@@ -72,7 +67,63 @@ export default function Schema() {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "裝修水電工程",
+            name: "水電維修",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "台北水電維修",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "新北水電維修",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "跳電與電路維修",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "漏水抓漏",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "水管疏通",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "馬桶疏通與衛浴維修",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "抽水馬達維修",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "加壓馬達工程",
           },
         },
         {
@@ -86,7 +137,7 @@ export default function Schema() {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "配電工程",
+            name: "配電箱維修",
           },
         },
         {
@@ -107,29 +158,13 @@ export default function Schema() {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "漏水抓漏",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "抽水馬達與加壓馬達工程",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "水管疏通",
+            name: "裝修水電工程",
           },
         },
       ],
     },
 
-    sameAs: [
-      "https://line.me/ti/p/ezn_Ad6UpZ",
-    ],
+    sameAs: ["https://line.me/ti/p/ezn_Ad6UpZ"],
   };
 
   return (

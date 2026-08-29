@@ -2,52 +2,73 @@
 
 import { useState } from "react";
 
-export default function FAQ() {
-  const faqs = [
-    {
-      q: "有提供 24 小時水電維修嗎？",
-      a: "有，提供雙北地區 24 小時緊急水電維修服務。跳電、漏水、馬桶堵塞、水管異常等緊急狀況，都可以直接聯繫我們。",
-    },
-    {
-      q: "除了水電維修，也有承接裝修工程嗎？",
-      a: "有。除了緊急維修，也承接裝修水電、室內配線、配電工程、給排水工程、衛浴工程及相關設備安裝。",
-    },
-    {
-      q: "裝修水電工程可以先估價嗎？",
-      a: "可以。可以先透過電話或 LINE 說明工程需求，也可以提供現場照片或施工圖面；實際工程內容與費用仍需依現場條件確認。",
-    },
-    {
-      q: "水電維修會先報價嗎？",
-      a: "會。到場後會先確認現場問題與施工內容，再說明相關費用；確認施工內容與報價後再進行施工。",
-    },
-    {
-      q: "可以直接傳照片給你們看嗎？",
-      a: "可以。若是漏水、跳電、馬桶、水管、配電箱或設備故障，可以先透過 LINE 提供現場照片與問題說明，方便我們初步了解狀況。",
-    },
-    {
-      q: "雙北哪些地區有服務？",
-      a: "提供台北市及新北市地區服務，實際是否能安排到府及施工時間，會依案件位置、交通與當日派工狀況安排。",
-    },
-    {
-      q: "施工完成後有保固嗎？",
-      a: "依不同工程項目及施工內容提供相應的售後與保固服務，實際保固內容會依報價及工程約定為準。",
-    },
-    {
-      q: "大型水電或住宅翻修工程也可以詢問嗎？",
-      a: "可以。住宅翻修、室內配線、配電、給排水、衛浴及裝修水電工程都可以洽詢，歡迎提供工程需求與現場資料。",
-    },
-  ];
+const faqs = [
+  {
+    q: "有提供 24 小時水電維修嗎？",
+    a: "有，棟鑫水電提供台北市、新北市雙北地區 24 小時緊急水電聯絡服務。跳電、漏水、馬桶堵塞、水管異常、馬達故障等緊急狀況，都可以先電話或 LINE 聯繫，實際派工時間依地區、案件狀況與當日安排為準。",
+  },
+  {
+    q: "除了水電維修，也有承接裝修工程嗎？",
+    a: "有。除了緊急水電維修，也承接裝修水電、室內配線、老屋重拉線、專用迴路、配電工程、給排水工程、衛浴工程及相關設備安裝。",
+  },
+  {
+    q: "裝修水電工程可以先估價嗎？",
+    a: "可以先透過電話或 LINE 說明工程需求，也可以提供現場照片、尺寸或施工圖面。較大型或較複雜的工程，仍需依現場管線、設備及施工條件確認實際內容與費用。",
+  },
+  {
+    q: "水電維修會先報價嗎？",
+    a: "師傅到場後會先確認現場問題與預計施工內容，再依實際狀況說明費用。若現場檢查後發現需要追加材料、拆除或其他工程，也會再說明處理方式。",
+  },
+  {
+    q: "可以直接傳照片給你們看嗎？",
+    a: "可以。漏水、跳電、馬桶、水管、配電箱、馬達或衛浴設備問題，都可以先透過 LINE 提供現場照片、設備品牌型號與問題說明，方便先了解狀況。",
+  },
+  {
+    q: "雙北哪些地區有服務？",
+    a: "主要服務台北市及新北市。不同地區的實際派工及施工時間，會依案件位置、交通、工程內容與當日師傅安排為準。",
+  },
+  {
+    q: "施工完成後有保固嗎？",
+    a: "不同工程項目、材料與施工內容的保固方式可能不同，實際保固範圍與期限會依報價、施工項目及雙方約定內容為準。",
+  },
+  {
+    q: "大型水電或住宅翻修工程也可以詢問嗎？",
+    a: "可以。住宅翻修、店面裝修、室內配線、配電、給排水、衛浴及其他裝修水電工程都可以洽詢，可先提供工程需求、照片或圖面協助初步了解。",
+  },
+];
 
+export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+  };
 
   return (
     <section
       id="faq"
+      aria-labelledby="faq-title"
       style={{
         padding: "110px 20px",
         background: "#ffffff",
       }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema),
+        }}
+      />
+
       <div
         style={{
           maxWidth: "900px",
@@ -78,6 +99,7 @@ export default function FAQ() {
           </div>
 
           <h2
+            id="faq-title"
             style={{
               margin: "0 0 16px",
               fontSize: "clamp(32px, 6vw, 46px)",
@@ -86,21 +108,20 @@ export default function FAQ() {
               lineHeight: 1.2,
             }}
           >
-            常見問題
+            雙北水電常見問題
           </h2>
 
           <p
             style={{
-              maxWidth: "680px",
+              maxWidth: "700px",
               margin: "0 auto",
               color: "#64748b",
               fontSize: "clamp(16px, 4vw, 18px)",
               lineHeight: 1.8,
             }}
           >
-            水電維修、裝修工程及到府服務常見問題，
-            <br />
-            讓您在聯繫前先快速了解服務方式。
+            水電維修、裝修工程、報價、派工及到府服務常見問題，
+            讓您在聯絡前先快速了解棟鑫水電的服務方式。
           </p>
         </div>
 
@@ -108,6 +129,8 @@ export default function FAQ() {
         <div>
           {faqs.map((faq, index) => {
             const isOpen = open === index;
+            const answerId = `faq-answer-${index}`;
+            const buttonId = `faq-button-${index}`;
 
             return (
               <div
@@ -127,11 +150,11 @@ export default function FAQ() {
                 }}
               >
                 <button
+                  id={buttonId}
                   type="button"
                   aria-expanded={isOpen}
-                  onClick={() =>
-                    setOpen(isOpen ? null : index)
-                  }
+                  aria-controls={answerId}
+                  onClick={() => setOpen(isOpen ? null : index)}
                   style={{
                     width: "100%",
                     padding: "22px 24px",
@@ -152,6 +175,7 @@ export default function FAQ() {
                   <span>{faq.q}</span>
 
                   <span
+                    aria-hidden="true"
                     style={{
                       flexShrink: 0,
                       width: "32px",
@@ -160,12 +184,8 @@ export default function FAQ() {
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: "50%",
-                      background: isOpen
-                        ? "#111827"
-                        : "#f1f5f9",
-                      color: isOpen
-                        ? "#fff"
-                        : "#475569",
+                      background: isOpen ? "#111827" : "#f1f5f9",
+                      color: isOpen ? "#fff" : "#475569",
                       fontSize: "20px",
                       fontWeight: 400,
                     }}
@@ -176,6 +196,9 @@ export default function FAQ() {
 
                 {isOpen && (
                   <div
+                    id={answerId}
+                    role="region"
+                    aria-labelledby={buttonId}
                     style={{
                       padding: "0 24px 24px",
                       color: "#64748b",
@@ -209,7 +232,7 @@ export default function FAQ() {
               fontWeight: 800,
             }}
           >
-            還有工程問題需要確認？
+            還有水電或工程問題需要確認？
           </h3>
 
           <p
@@ -220,8 +243,8 @@ export default function FAQ() {
               lineHeight: 1.8,
             }}
           >
-            歡迎提供現場照片、工程需求或施工圖面，
-            讓我們先了解您的需求。
+            可提供現場照片、設備型號、工程需求或施工圖面，
+            讓我們先了解目前狀況。
           </p>
 
           <div
