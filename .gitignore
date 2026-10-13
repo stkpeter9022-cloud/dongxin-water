@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local restore copies and audit downloads/results
+/backups/
+/.audit-cache/
+/audit/*.json
+/audit/*.html
+/audit/*.png
+/audit/tools/
+/audit/baseline-project/
+/audit/*.patch

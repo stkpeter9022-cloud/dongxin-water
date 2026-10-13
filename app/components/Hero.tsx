@@ -1,28 +1,11 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <section
+    <section className="home-hero"
       style={{
         position: "relative",
-        minHeight: isMobile ? "820px" : "820px",
+        minHeight: "820px",
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
@@ -38,11 +21,11 @@ export default function Hero() {
         src="/case3.jpg"
         alt="雙北水電工程與裝修施工"
         fill
-        priority
+        preload
         sizes="100vw"
         style={{
           objectFit: "cover",
-          objectPosition: isMobile ? "60% center" : "center",
+          objectPosition: "var(--hero-image-position)",
           filter: "brightness(38%) contrast(1.05)",
           transform: "scale(1.02)",
         }}
@@ -81,7 +64,7 @@ export default function Hero() {
           position: "absolute",
           left: 0,
           top: 0,
-          width: isMobile ? "70px" : "120px",
+          width: "var(--hero-accent-width)",
           height: "4px",
           background: "#F5B942",
           zIndex: 3,
@@ -99,7 +82,7 @@ export default function Hero() {
           width: "100%",
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: isMobile ? "115px 22px 80px" : "125px 50px 90px",
+          padding: "var(--hero-content-padding)",
         }}
       >
         {/* 上方標籤 */}
@@ -109,13 +92,13 @@ export default function Hero() {
             display: "inline-flex",
             alignItems: "center",
             gap: "10px",
-            marginBottom: isMobile ? "22px" : "28px",
+            marginBottom: "var(--hero-label-margin)",
             padding: "9px 15px",
             borderLeft: "3px solid #F5B942",
             background: "rgba(255,255,255,.07)",
             backdropFilter: "blur(12px)",
             color: "rgba(255,255,255,.9)",
-            fontSize: isMobile ? "13px" : "15px",
+            fontSize: "var(--hero-label-font)",
             fontWeight: 700,
             letterSpacing: "1.5px",
           }}
@@ -141,10 +124,10 @@ export default function Hero() {
           style={{
             margin: 0,
             maxWidth: "900px",
-            fontSize: isMobile ? "40px" : "68px",
+            fontSize: "var(--hero-title-font)",
             lineHeight: 1.14,
             fontWeight: 850,
-            letterSpacing: isMobile ? "-1.5px" : "-2.5px",
+            letterSpacing: "var(--hero-title-spacing)",
           }}
         >
           雙北水電工程
@@ -165,10 +148,10 @@ export default function Hero() {
 
         <p
           style={{
-            margin: isMobile ? "22px 0 28px" : "25px 0 30px",
+            margin: "var(--hero-description-margin)",
             maxWidth: "760px",
             color: "rgba(255,255,255,.9)",
-            fontSize: isMobile ? "17px" : "22px",
+            fontSize: "var(--hero-description-font)",
             lineHeight: 1.75,
             fontWeight: 500,
           }}
@@ -206,13 +189,13 @@ export default function Hero() {
             <span
               key={item}
               style={{
-                padding: isMobile ? "8px 12px" : "9px 14px",
+                padding: "var(--hero-tag-padding)",
                 border: "1px solid rgba(255,255,255,.18)",
                 background: "rgba(255,255,255,.075)",
                 backdropFilter: "blur(8px)",
                 borderRadius: "6px",
                 color: "rgba(255,255,255,.92)",
-                fontSize: isMobile ? "13px" : "15px",
+                fontSize: "var(--hero-tag-font)",
                 fontWeight: 600,
               }}
             >
@@ -229,10 +212,10 @@ export default function Hero() {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: isMobile ? "10px 18px" : "12px 30px",
+            gap: "var(--hero-trust-gap)",
             marginBottom: "32px",
             color: "rgba(255,255,255,.82)",
-            fontSize: isMobile ? "13px" : "15px",
+            fontSize: "var(--hero-trust-font)",
           }}
         >
           <span>✓ 雙北到府服務</span>
@@ -245,10 +228,9 @@ export default function Hero() {
             CTA
         ======================================== */}
 
-        <div
+        <div className="hero-actions"
           style={{
             display: "flex",
-            flexDirection: isMobile ? "column" : "row",
             gap: "12px",
             width: "100%",
             maxWidth: "590px",
@@ -268,7 +250,7 @@ export default function Hero() {
               color: "#101417",
               borderRadius: "7px",
               textDecoration: "none",
-              fontSize: isMobile ? "18px" : "20px",
+              fontSize: "var(--hero-phone-font)",
               fontWeight: 800,
               boxShadow: "0 12px 30px rgba(0,0,0,.3)",
             }}
@@ -292,7 +274,7 @@ export default function Hero() {
               color: "#fff",
               borderRadius: "7px",
               textDecoration: "none",
-              fontSize: isMobile ? "18px" : "20px",
+              fontSize: "var(--hero-line-font)",
               fontWeight: 800,
               boxShadow: "0 12px 30px rgba(0,0,0,.3)",
             }}
@@ -311,7 +293,7 @@ export default function Hero() {
             marginBottom: 0,
             maxWidth: "650px",
             color: "rgba(255,255,255,.58)",
-            fontSize: isMobile ? "12px" : "13px",
+            fontSize: "var(--hero-note-font)",
             lineHeight: 1.7,
           }}
         >
@@ -323,8 +305,7 @@ export default function Hero() {
           右下角工程識別
       ======================================== */}
 
-      {!isMobile && (
-        <div
+        <div className="hero-desktop-badge"
           style={{
             position: "absolute",
             right: "50px",
@@ -341,7 +322,6 @@ export default function Hero() {
         >
           WATER · ELECTRICAL · RENOVATION
         </div>
-      )}
     </section>
   );
 }

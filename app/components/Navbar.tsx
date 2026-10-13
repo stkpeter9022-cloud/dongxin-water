@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -49,15 +50,8 @@ export default function Navbar() {
               whiteSpace: "nowrap",
             }}
           >
-            <span
-              aria-hidden="true"
-              style={{
-                color: "#d6a52c",
-                fontSize: "25px",
-              }}
-            >
-              ⚡
-            </span>
+            <Image src="/icon.png" alt="棟鑫水電公司 Logo" width={44} height={44}
+              style={{ borderRadius: "50%", flexShrink: 0 }} />
 
             <span
               style={{
@@ -227,74 +221,6 @@ export default function Navbar() {
         )}
       </header>
 
-      <style jsx global>{`
-        .desktop-nav {
-          display: flex;
-          align-items: center;
-          gap: 22px;
-        }
-
-        .nav-link {
-          color: #e2e8f0;
-          text-decoration: none;
-          font-size: 15px;
-          font-weight: 700;
-          white-space: nowrap;
-          transition: color 0.2s ease;
-        }
-
-        .nav-link:hover {
-          color: #d6a52c;
-        }
-
-        .mobile-menu-button {
-          display: none;
-          width: 44px;
-          height: 44px;
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          border-radius: 8px;
-          background: rgba(255, 255, 255, 0.05);
-          cursor: pointer;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-          gap: 5px;
-          padding: 0;
-        }
-
-        .mobile-navigation {
-          display: none;
-        }
-
-        @media (max-width: 900px) {
-          .desktop-nav {
-            display: none;
-          }
-
-          .mobile-menu-button {
-            display: flex;
-          }
-
-          .mobile-navigation {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            padding: 12px 20px 22px;
-            background: #0f172a;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-          }
-
-          .mobile-navigation a {
-            display: block;
-            padding: 13px 12px;
-            color: #e2e8f0;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 700;
-          }
-        }
-      `}</style>
     </>
   );
 }

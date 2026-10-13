@@ -143,3 +143,114 @@ button {
     scroll-behavior: auto !important;
   }
 }
+/* Render the correct hero layout before JavaScript loads. */
+.home-hero {
+  --hero-image-position: center;
+  --hero-accent-width: 120px;
+  --hero-content-padding: 125px 50px 90px;
+  --hero-label-margin: 28px;
+  --hero-label-font: 15px;
+  --hero-title-font: 68px;
+  --hero-title-spacing: -2.5px;
+  --hero-description-margin: 25px 0 30px;
+  --hero-description-font: 22px;
+  --hero-tag-padding: 9px 14px;
+  --hero-tag-font: 15px;
+  --hero-trust-gap: 12px 30px;
+  --hero-trust-font: 15px;
+  --hero-phone-font: 20px;
+  --hero-line-font: 20px;
+  --hero-note-font: 13px;
+}
+.hero-actions { flex-direction: row; }
+@media (max-width: 767px) {
+  .home-hero {
+    --hero-image-position: 60% center;
+    --hero-accent-width: 70px;
+    --hero-content-padding: 115px 22px 80px;
+    --hero-label-margin: 22px;
+    --hero-label-font: 13px;
+    --hero-title-font: 40px;
+    --hero-title-spacing: -1.5px;
+    --hero-description-margin: 22px 0 28px;
+    --hero-description-font: 17px;
+    --hero-tag-padding: 8px 12px;
+    --hero-tag-font: 13px;
+    --hero-trust-gap: 10px 18px;
+    --hero-trust-font: 13px;
+    --hero-phone-font: 18px;
+    --hero-line-font: 18px;
+    --hero-note-font: 12px;
+  }
+  .hero-actions { flex-direction: column; }
+  .hero-desktop-badge, .home-hero .desktop-break { display: none; }
+}
+
+/* Shared navigation styles available in the initial HTML. */
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-link {
+  color: #e2e8f0;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #d6a52c;
+}
+
+.mobile-menu-button {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+}
+
+.mobile-navigation {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+  }
+
+  .mobile-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 12px 20px 22px;
+    background: #0f172a;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-navigation a {
+    display: block;
+    padding: 13px 12px;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+  }
+}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const services = [
   {
@@ -76,9 +77,13 @@ export default function Footer() {
               fontSize: "30px",
               margin: "0 0 18px",
               fontWeight: 800,
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
             }}
           >
-            <span style={{ color: "#d6a52c" }}>⚡</span>{" "}
+            <Image src="/icon.png" alt="棟鑫水電公司 Logo" width={48} height={48}
+              style={{ borderRadius: "50%", flexShrink: 0 }} />
             棟鑫水電
           </h2>
 

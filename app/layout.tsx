@@ -142,7 +142,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
 
-        <Script id="google-tag" strategy="afterInteractive">
+        <Script id="google-tag" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
 
@@ -165,6 +165,41 @@ export default function RootLayout({
 
             // Google Ads 目前使用的帳號
             gtag('config', 'AW-18404348972');
+
+            // One delegated listener covers all current and future contact links.
+            // These events represent a click, never a connected phone call.
+            if (!window.dongxinContactTrackingInstalled) {
+              window.dongxinContactTrackingInstalled = true;
+              document.addEventListener('click', function(event) {
+                var target = event.target;
+                var link = target instanceof Element ? target.closest('a[href]') : null;
+                if (!link) return;
+                var href = link.getAttribute('href');
+                var method = href === 'tel:0918808209' ? 'phone'
+                  : href === 'https://line.me/ti/p/ezn_Ad6UpZ' ? 'line' : null;
+                if (!method) return;
+                var location = link.closest('header') ? 'navbar'
+                  : link.closest('footer') ? 'footer'
+                  : link.closest('nav[aria-label="快速聯絡"]') ? 'floating' : 'content';
+                var params = {
+                  contact_method: method,
+                  contact_action: 'click',
+                  contact_location: location,
+                  page_path: window.location.pathname,
+                  transport_type: 'beacon'
+                };
+                try {
+                  gtag('event', 'conversion_event_contact', {
+                    ...params, value: 1, currency: 'TWD'
+                  });
+                  gtag('event', method === 'phone' ? 'click_phone' : 'click_line', {
+                    ...params, send_to: 'G-KQMV13X0NC'
+                  });
+                } catch (_) {
+                  // Tracking failures must not interfere with native link navigation.
+                }
+              }, true);
+            }
           `}
         </Script>
 
@@ -184,6 +219,7 @@ export default function RootLayout({
             url: "https://www.dongxin24.com/",
             telephone: "0918808209",
             image: "https://www.dongxin24.com/case3.jpg",
+            logo: "https://www.dongxin24.com/icon.png",
 
             description:
               "棟鑫水電提供台北市、新北市雙北地區24小時水電維修與水電工程服務。",
