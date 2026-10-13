@@ -15,6 +15,7 @@ const eslintConfig = defineConfig([
     "backups/**",
     "audit/tools/**",
     "audit/baseline-project/**",
+    "audit/performance-before/**",
     ".audit-cache/**",
   ]),
 ]);
