@@ -45,7 +45,7 @@ node audit/measure.mjs preview-devtools https://PREVIEW_HOST --devtools
 
 Preview 效能數據獨立列出；若需要雲端改版前／後效能結論，必須另建原版 Preview 並使用相同設定交替多次測試。測試若遇部署保護，應使用已授權 Vercel 連線或由使用者完成正常登入，不變更既有保護設定。
 
-## 本次 Preview 結果
+## 分享授權前結果（歷史）
 
 - 已推送 source commit `4621d66dd4a88e6a39dc6f5c2d0cac14b6e1dd5b`，14 個指定檔案；工作區乾淨，遠端 main 仍為原基準。
 - GitHub Deployment `7049817422`，environment **Preview**，state **success**，description “Deployment has completed”；GitHub Vercel commit status 也為 success。
@@ -55,3 +55,31 @@ Preview 效能數據獨立列出；若需要雲端改版前／後效能結論，
 - Preview 的 verify 與 tags 測試已嘗試，但未通過網站驗證：HTTP 導向 vercel.com/login，頁面標題 **Login – Vercel**，沒有網站的標題或 GA4 config。返回 200 的是登入頁，不能視為網站正常回應。部署保護需要有效的登入連線；未停用或繞過既有保護。
 - **Preview 畫面、電話／LINE、事件次數、Google script 次數、Lighthouse 數據及完整建置日誌仍待受保護存取完成後驗證。** 沒有把本機結果說成 Preview 結果，也沒有聲稱已檢視完整 Vercel logs。
 - 目前 **不具備已驗證可發布正式站的條件**。待 Preview 實測完成、效能結果被評估，以及帳號端轉換映射核對後才能確認。沒有發布正式站。
+
+## 分享授權後結果
+
+測試網址：<https://dongxin-water-git-preview-m-b15c20-stkpeter9022-clouds-projects.vercel.app>。測試來源為 fd47f57，網站程式與先前修正版一致。本次只更新驗證腳本／紀錄，沒有變更網站、Google ID 或事件，也沒有發布正式站。
+
+分享授權透過 Playwright 的 API request 建立限定 Preview 網域的 Cookie，不執行分享參數網址的頁面 JavaScript。之後所有頁面及 Lighthouse 皆使用不含分享參數的網址。Cookie 僅在臨時瀏覽器中使用，分享參數不寫入原始碼或測試報告；輸入檔在 Git 忽略的 audit/tools 內，完成後刪除。
+
+**Preview 功能驗證通過**：13 頁 × 390×844／1440×900，161 次電話／LINE 連結、2 次 client navigation 後聯絡點擊，既有每個事件各一次，追蹤故障時不攔截原生連結。200／404 HTTP 狀態、四個 config ID、Logo、無水平溢出、Hero 無 JS 幾何一致性檢查通過，無 runtime error。首頁、頁尾、代表服務頁的手機／桌面截圖已人工檢視。
+
+允許 Google scripts 執行、阻擋 measurement／conversion 外送的 Preview 測試也通過：GA4 G-KQMV13X0NC 與 Google 自動載入的 AW-18404348972 各下載一次，換頁後未重複；四組既有 config 各一次。測試沒有實際撥號、開啟 LINE 或送出測試轉換，也不能據此證明電話接通或 Ads 後台事件映射正確。
+
+### Preview 效能（獨立讀數，不與本機／正式站比較）
+
+同一 Preview、Lighthouse 13.5.0、Chrome 155、412×823、CPU 4 倍與先前相同限速參數。模擬第 1 輪使用已授權 Puppeteer page；對照輪恢復原本的 Lighthouse 自行建頁方式，授權 Cookie 仍留在同一網域，不新增全域秘密 headers。兩種頁面建立方式的讀數完整保留，不以較好的分數宣稱網站又有改善。
+
+| 報告 | 效能 | LCP 秒 | CLS | TBT ms | 狀態 |
+| --- | ---: | ---: | ---: | ---: | --- |
+| preview-authorized-simulate | 48 | 4.690 | 0 | 1629 | 完成、無警告 |
+| preview-authorized-simulate-control | 56 | 3.103 | 0 | 2395 | 標準建頁對照、完成、無警告 |
+| preview-authorized-devtools | 31 | 10.248 | 0 | 28193 | 載入超時，可能不完整 |
+| preview-authorized-devtools-repeat | 29 | 21.624 | 0 | 28694 | 重測仍超時，可能不完整 |
+| preview-authorized-devtools-control | 無有效分數 | 15.979 | 0 | 無有效數據 | 標準建頁對照超時，NO_TTI_NETWORK_IDLE_PERIOD |
+
+實際限速的高阻塞不只出現一次，但都存在超時限制；控制輪的 score 與 TBT 是 null／error，**不是 0 分或 0ms**。測量腳本已避免將 null 分數轉成 0。這些讀數只保留為診斷資料，不能當作完整穩定的效能基準。主機 benchmarkIndex 也有波動（既有本機修正版 2597.5，本次實際限速約 1299–1470），同設定不代表主機執行負載相同。
+
+兩輪完整模擬測試的 CLS 都為 0，但 LCP 與 TBT 仍未達理想。Google scripts 有明顯 evaluation 成本（模擬約 1.3 秒），版面計算也占主執行緒時間；實際限速的 LCP 元素改為背景工程圖，延遲含資源載入及繪製等待，不能只歸因圖片大小或重複載入。原有三組 Ads 設定保留。
+
+**發布判定：功能與 Preview 部署檢查通過，效能驗證尚未通過，不建議現在以「效能已修好」發布正式站。** 尚需改善與可靠重測 JS／版面／首屏繪製，以及核對 Ads 帳號端的主要／次要轉換與映射。此次僅完成 Preview 驗證，沒有 promote Production。

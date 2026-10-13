@@ -1,11 +1,13 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { chromium } from './tools/node_modules/playwright/index.mjs';
+import { authorizeContext } from './preview-auth.mjs';
 
 const [label='tags-local',baseUrl='http://localhost:3000'] = process.argv.slice(2);
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 try {
   const context=await browser.newContext({viewport:{width:390,height:844}});
+  await authorizeContext(context,baseUrl);
   const scripts=[];
   // Allow genuine Google script loading, block measurement/beacon endpoints.
   await context.route('**/*',r=>{

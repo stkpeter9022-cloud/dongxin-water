@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { chromium } from './tools/node_modules/playwright/index.mjs';
+import { authorizeContext } from './preview-auth.mjs';
 
 const label = process.argv[2] || 'after';
 const baseUrl = (process.argv[3] || 'http://localhost:3000').replace(/\/$/, '');
@@ -10,6 +11,7 @@ const routes = ['/', ...fs.readdirSync('app', {withFileTypes:true}).filter(d => 
 try {
   for (const viewport of [{width:390,height:844}, {width:1440,height:900}]) {
     const context = await browser.newContext({viewport, deviceScaleFactor:1});
+    await authorizeContext(context,baseUrl);
     // Never send test contact events to Google or open a real dialer/LINE app.
     await context.route(/https:\/\/(www\.)?(google|googletagmanager|googleadservices|doubleclick)\./, r => r.abort());
     const page = await context.newPage();
@@ -71,6 +73,7 @@ try {
         await page.goto(`${baseUrl}/`,{waitUntil:'networkidle'});
         const live=await page.locator('h1').boundingBox();
         const noJS=await browser.newContext({viewport,javaScriptEnabled:false});
+        await authorizeContext(noJS,baseUrl);
         const staticPage=await noJS.newPage();
         await staticPage.goto(`${baseUrl}/`);
         const staticBox=await staticPage.locator('h1').boundingBox();
