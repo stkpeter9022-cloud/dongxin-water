@@ -17,6 +17,7 @@ try {
     page.on('pageerror', e => errors.push(e.message));
     for (const route of routes) {
       const response=await page.goto(`${baseUrl}${route}`, {waitUntil:'networkidle'});
+      assert.equal(new URL(page.url()).origin,new URL(baseUrl).origin,`${route}: redirected away from Preview (Vercel Authentication may be required)`);
       assert.equal(response.status(),route==='/missing-audit-page'?404:200,`${route}: unexpected HTTP status (deployment protection may be enabled)`);
       if(await page.locator('footer').count()) await page.locator('footer').scrollIntoViewIfNeeded();
       await page.waitForFunction(() => [...document.querySelectorAll('header img,footer img')].every(i=>i.complete&&i.naturalWidth>0));

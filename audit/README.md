@@ -1,5 +1,7 @@
 # 棟鑫水電網站檢查（2026-10-14）
 
+此檔記錄初次本機檢查；後續提交與 Vercel Preview 狀態見 [PREVIEW.md](./PREVIEW.md)。
+
 修改前 Git 狀態乾淨。可還原副本在 `backups/before-audit-20261014-035740/`，包含原始 app、public、根目錄檔案及工作區／暫存區 patch。未重設 Git、未提交、未部署。備份與測試下載已排除於 Git、TypeScript 與 ESLint。
 
 ## 修正

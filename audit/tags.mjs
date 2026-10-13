@@ -20,8 +20,10 @@ try {
   const scriptResponses=[];
   page.on('response',r=>{if(r.url().includes('googletagmanager.com/gtag/js'))scriptResponses.push({url:r.url(),status:r.status()});});
   page.on('request',r=>{const u=new URL(r.url());if(u.hostname==='www.googletagmanager.com'&&u.pathname==='/gtag/js')scripts.push({id:u.searchParams.get('id'),url:u.href});});
-  await page.goto(baseUrl,{waitUntil:'networkidle'});
-  await page.waitForFunction(()=>window.google_tag_manager, {timeout:30000}).catch(async error=>{
+  await page.goto(baseUrl,{waitUntil:'domcontentloaded'});
+  assert.equal(new URL(page.url()).origin,new URL(baseUrl).origin,'Preview redirected to login; authenticated access required');
+  await page.waitForLoadState('networkidle');
+  await page.waitForFunction(()=>window.google_tag_manager, null, {timeout:30000}).catch(async error=>{
     console.log(JSON.stringify({scripts,scriptResponses,diagnostic:await page.evaluate(()=>({managerKeys:Object.keys(window.google_tag_manager||{}),dataLayerEntries:window.dataLayer?.length,scripts:[...document.scripts].map(s=>s.src).filter(Boolean)}))},null,2));
     throw error;
   });
