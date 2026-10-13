@@ -1,7 +1,3 @@
-"use client";
-
-import { useState } from "react";
-
 const faqs = [
   {
     q: "有提供 24 小時水電維修嗎？",
@@ -38,8 +34,6 @@ const faqs = [
 ];
 
 export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(0);
-
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -128,33 +122,26 @@ export default function FAQ() {
         {/* FAQ */}
         <div>
           {faqs.map((faq, index) => {
-            const isOpen = open === index;
             const answerId = `faq-answer-${index}`;
             const buttonId = `faq-button-${index}`;
 
             return (
-              <div
+              <details
                 key={faq.q}
+                className="faq-item"
+                name="dongxin-faq"
+                open={index === 0}
                 style={{
                   marginBottom: "14px",
                   borderRadius: "14px",
-                  border: isOpen
-                    ? "1px solid #d6a52c"
-                    : "1px solid #e5e7eb",
                   background: "#fff",
                   overflow: "hidden",
-                  boxShadow: isOpen
-                    ? "0 8px 24px rgba(15,23,42,.06)"
-                    : "0 5px 18px rgba(15,23,42,.04)",
                   transition: "all .2s ease",
                 }}
               >
-                <button
+                <summary
                   id={buttonId}
-                  type="button"
-                  aria-expanded={isOpen}
                   aria-controls={answerId}
-                  onClick={() => setOpen(isOpen ? null : index)}
                   style={{
                     width: "100%",
                     padding: "22px 24px",
@@ -175,6 +162,7 @@ export default function FAQ() {
                   <span>{faq.q}</span>
 
                   <span
+                    className="faq-indicator"
                     aria-hidden="true"
                     style={{
                       flexShrink: 0,
@@ -184,17 +172,15 @@ export default function FAQ() {
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: "50%",
-                      background: isOpen ? "#111827" : "#f1f5f9",
-                      color: isOpen ? "#fff" : "#475569",
                       fontSize: "20px",
                       fontWeight: 400,
                     }}
                   >
-                    {isOpen ? "−" : "+"}
+                    <span className="faq-plus">+</span>
+                    <span className="faq-minus">−</span>
                   </span>
-                </button>
+                </summary>
 
-                {isOpen && (
                   <div
                     id={answerId}
                     role="region"
@@ -208,8 +194,7 @@ export default function FAQ() {
                   >
                     {faq.a}
                   </div>
-                )}
-              </div>
+              </details>
             );
           })}
         </div>

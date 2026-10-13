@@ -119,9 +119,9 @@ export const metadata: Metadata = {
   // 網站圖示
   // ================================
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: { url: "/icon1", type: "image/png", sizes: "32x32" },
+    shortcut: "/icon1",
+    apple: { url: "/apple-icon", type: "image/png", sizes: "180x180" },
   },
 };
 

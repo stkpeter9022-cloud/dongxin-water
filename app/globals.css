@@ -163,6 +163,53 @@ button {
   --hero-note-font: 13px;
 }
 .hero-actions { flex-direction: row; }
+
+/* Keep offscreen content in the DOM while postponing its layout and paint.
+   Estimates come from measured section sizes; auto remembers the rendered size. */
+@supports (content-visibility: auto) {
+  .home-main > section:not(.home-hero) {
+    content-visibility: auto;
+    contain-intrinsic-block-size: auto var(--section-block-size);
+    scroll-margin-top: 72px;
+  }
+  #services { --section-block-size: 1625px; }
+  #why-us { --section-block-size: 710px; }
+  #process { --section-block-size: 765px; }
+  #gallery { --section-block-size: 1975px; }
+  #reviews { --section-block-size: 860px; }
+  #project-types { --section-block-size: 1145px; }
+  #faq { --section-block-size: 1320px; }
+  #areas { --section-block-size: 1245px; }
+  @media (max-width: 1023px) {
+    #services { --section-block-size: 2310px; }
+    #why-us { --section-block-size: 990px; }
+    #process { --section-block-size: 1135px; }
+    #gallery { --section-block-size: 2920px; }
+    #reviews { --section-block-size: 1115px; }
+    #project-types { --section-block-size: 1495px; }
+    #faq { --section-block-size: 1345px; }
+    #areas { --section-block-size: 1370px; }
+  }
+  @media (max-width: 767px) {
+    #services { --section-block-size: 3800px; }
+    #why-us { --section-block-size: 1625px; }
+    #process { --section-block-size: 2125px; }
+    #gallery { --section-block-size: 4910px; }
+    #reviews { --section-block-size: 1405px; }
+    #project-types { --section-block-size: 2560px; }
+    #faq { --section-block-size: 1580px; }
+    #areas { --section-block-size: 2050px; }
+  }
+}
+
+.faq-item { border: 1px solid #e5e7eb; box-shadow: 0 5px 18px rgba(15,23,42,.04); }
+.faq-item[open] { border-color: #d6a52c; box-shadow: 0 8px 24px rgba(15,23,42,.06); }
+.faq-item summary { list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-indicator { background: #f1f5f9; color: #475569; }
+.faq-minus, .faq-item[open] .faq-plus { display: none; }
+.faq-item[open] .faq-minus { display: inline; }
+.faq-item[open] .faq-indicator { background: #111827; color: #fff; }
 @media (max-width: 767px) {
   .home-hero {
     --hero-image-position: 60% center;
