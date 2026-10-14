@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/Breadcrumbs";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -91,12 +92,13 @@ const strengths = [
 
 export default function AboutPage() {
   return (
-    <main
+    <main id="main-content"
       style={{
         background: "#f8fafc",
         color: "#111827",
       }}
     >
+      <Breadcrumbs title="關於棟鑫工程行" path="/about" />
       {/* Hero */}
       <section
         style={{
@@ -255,7 +257,7 @@ export default function AboutPage() {
             style={{
               display: "grid",
               gridTemplateColumns:
-                "repeat(auto-fit,minmax(220px,1fr))",
+                "repeat(auto-fit,minmax(min(100%, 220px), 1fr))",
               gap: "18px",
             }}
           >
@@ -345,7 +347,7 @@ export default function AboutPage() {
             style={{
               display: "grid",
               gridTemplateColumns:
-                "repeat(auto-fit,minmax(250px,1fr))",
+                "repeat(auto-fit,minmax(min(100%, 250px), 1fr))",
               gap: "15px",
             }}
           >
@@ -416,8 +418,8 @@ export default function AboutPage() {
               lineHeight: 2,
             }}
           >
-            主要服務範圍為台北市、新北市。
-            一般水電工程可預約安排，
+            棟鑫工程行以「棟鑫水電」提供服務。一般維修與24小時緊急叫修，主要服務台北市、新北市。
+            較大型裝修水電、室內配線、老屋換線與給排水工程，可洽詢台北、新北、桃園、基隆，依工程內容與排程評估。
             緊急跳電、漏水、排水堵塞及設備故障等問題，
             可透過電話或 LINE 聯絡並說明現場狀況。
           </p>

@@ -1,10 +1,13 @@
+import Breadcrumbs from "../components/Breadcrumbs";
+import ServiceContext from "../components/ServiceContext";
+import PageFaqs from "../components/PageFaqs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "台北新北室內配線｜老屋重拉線與專用迴路工程｜棟鑫水電",
 
   description:
-    "棟鑫水電提供台北、新北雙北室內配線工程，處理老屋重拉線、電線更新、插座迴路、冷氣專用迴路、配電箱整理及新增專用迴路，依現場用電需求與施工條件評估。",
+    "棟鑫工程行承接台北、新北、桃園、基隆較大型室內配線與老屋換線工程，處理老屋重拉線、電線更新、插座迴路、冷氣專用迴路、配電箱整理及新增專用迴路，依現場用電需求與施工條件評估。",
 
   alternates: {
     canonical: "https://www.dongxin24.com/shi-nei-pei-xian",
@@ -69,12 +72,13 @@ const faqs = [
 
 export default function Page() {
   return (
-    <main
+    <main id="main-content"
       style={{
         background: "#f8fafc",
         color: "#111827",
       }}
     >
+      <Breadcrumbs title="室內配線與老屋換線" path="/shi-nei-pei-xian" />
       <section
         style={{
           padding: "120px 20px 80px",
@@ -241,7 +245,7 @@ export default function Page() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+              gridTemplateColumns: "repeat(auto-fit,minmax(min(100%, 280px), 1fr))",
               gap: "20px",
             }}
           >
@@ -305,7 +309,7 @@ export default function Page() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+              gridTemplateColumns: "repeat(auto-fit,minmax(min(100%, 220px), 1fr))",
               gap: "18px",
             }}
           >
@@ -382,32 +386,7 @@ export default function Page() {
             室內配線常見問題
           </h2>
 
-          {faqs.map((faq) => (
-            <article
-              key={faq.q}
-              style={{
-                background: "#fff",
-                borderRadius: "12px",
-                padding: "24px",
-                marginBottom: "15px",
-                border: "1px solid #e5e7eb",
-              }}
-            >
-              <h3 style={{ fontSize: "19px", marginBottom: "10px" }}>
-                {faq.q}
-              </h3>
-
-              <p
-                style={{
-                  margin: 0,
-                  color: "#64748b",
-                  lineHeight: 1.8,
-                }}
-              >
-                {faq.a}
-              </p>
-            </article>
-          ))}
+          <PageFaqs items={faqs} />
         </div>
       </section>
 
@@ -457,6 +436,7 @@ export default function Page() {
           📞 立即聯絡棟鑫水電
         </a>
       </section>
+    <ServiceContext route="/shi-nei-pei-xian" />
     </main>
   );
 }

@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/Breadcrumbs";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -59,13 +60,14 @@ const services = [
 
 export default function ContactPage() {
   return (
-    <main
+    <main id="main-content"
       style={{
         background: "#f8fafc",
         color: "#111827",
         minHeight: "100vh",
       }}
     >
+      <Breadcrumbs title="聯絡與評估方式" path="/contact" />
       {/* Hero */}
       <section
         style={{
@@ -185,7 +187,7 @@ export default function ContactPage() {
             style={{
               display: "grid",
               gridTemplateColumns:
-                "repeat(auto-fit,minmax(260px,1fr))",
+                "repeat(auto-fit,minmax(min(100%, 260px), 1fr))",
               gap: "18px",
             }}
           >
@@ -253,9 +255,7 @@ export default function ContactPage() {
                   lineHeight: 1.8,
                 }}
               >
-                台北市・新北市
-                <br />
-                雙北地區到府服務
+                一般維修與24小時緊急叫修：台北、新北。<br />較大型裝修工程：台北、新北、桃園、基隆，依工項與排程評估。
               </p>
             </div>
 
@@ -395,7 +395,7 @@ export default function ContactPage() {
             style={{
               display: "grid",
               gridTemplateColumns:
-                "repeat(auto-fit,minmax(210px,1fr))",
+                "repeat(auto-fit,minmax(min(100%, 210px), 1fr))",
               gap: "14px",
             }}
           >

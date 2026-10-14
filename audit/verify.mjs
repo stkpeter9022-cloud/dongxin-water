@@ -59,7 +59,7 @@ try {
         assert.equal(click.events[0][2].contact_action,'click');
       }
       assert.equal(result.failurePrevented,false);
-      assert.ok(result.logos.length===(route==='/'?2:0)&&result.logos.every(i=>i.loaded),`${route}: logo failed`);
+      assert.ok(result.logos.length===2&&result.logos.every(i=>i.loaded),`${route}: shared brand logo failed`);
       results.push({route,width:viewport.width,links:result.clicks.length,passed:true});
       if(route==='/tiao-dian') {
         await page.goto(`${baseUrl}/tiao-dian`,{waitUntil:'networkidle'});

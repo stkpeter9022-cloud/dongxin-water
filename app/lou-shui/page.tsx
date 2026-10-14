@@ -1,3 +1,6 @@
+import Breadcrumbs from "../components/Breadcrumbs";
+import ServiceContext from "../components/ServiceContext";
+import PageFaqs from "../components/PageFaqs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -69,12 +72,13 @@ const faqs = [
 
 export default function Page() {
   return (
-    <main
+    <main id="main-content"
       style={{
         background: "#f8fafc",
         color: "#111827",
       }}
     >
+      <Breadcrumbs title="漏水處理" path="/lou-shui" />
       {/* Hero */}
 
       <section
@@ -254,7 +258,7 @@ export default function Page() {
             style={{
               display: "grid",
               gridTemplateColumns:
-                "repeat(auto-fit,minmax(280px,1fr))",
+                "repeat(auto-fit,minmax(min(100%, 280px), 1fr))",
               gap: "20px",
             }}
           >
@@ -331,7 +335,7 @@ export default function Page() {
             style={{
               display: "grid",
               gridTemplateColumns:
-                "repeat(auto-fit,minmax(220px,1fr))",
+                "repeat(auto-fit,minmax(min(100%, 220px), 1fr))",
               gap: "18px",
             }}
           >
@@ -408,37 +412,7 @@ export default function Page() {
             漏水處理常見問題
           </h2>
 
-          {faqs.map((faq) => (
-            <article
-              key={faq.q}
-              style={{
-                background: "#fff",
-                borderRadius: "12px",
-                padding: "24px",
-                marginBottom: "15px",
-                border: "1px solid #e5e7eb",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "19px",
-                  marginBottom: "10px",
-                }}
-              >
-                {faq.q}
-              </h3>
-
-              <p
-                style={{
-                  margin: 0,
-                  color: "#64748b",
-                  lineHeight: 1.8,
-                }}
-              >
-                {faq.a}
-              </p>
-            </article>
-          ))}
+          <PageFaqs items={faqs} />
         </div>
       </section>
 
@@ -490,6 +464,7 @@ export default function Page() {
           📞 立即聯絡棟鑫水電
         </a>
       </section>
+    <ServiceContext route="/lou-shui" />
     </main>
   );
 }

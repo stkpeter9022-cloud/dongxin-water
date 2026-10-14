@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import FloatingButtons from "./components/FloatingButtons";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Schema from "./components/Schema";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.dongxin24.com"),
@@ -10,12 +13,12 @@ export const metadata: Metadata = {
   // Google 自然搜尋 SEO
   // ================================
   title: {
-    default: "雙北水電｜台北新北24小時水電維修｜棟鑫水電",
-    template: "%s｜棟鑫水電",
+    default: "雙北水電維修・裝修水電工程｜棟鑫水電",
+    template: "%s",
   },
 
   description:
-    "棟鑫水電提供台北市、新北市雙北地區24小時水電維修與水電工程服務，專業處理水電急修、跳電、漏水抓漏、水管疏通、馬桶不通、抽水馬達、加壓馬達、室內配線、配電箱及衛浴工程，提供到府處理與現場評估。",
+    "棟鑫工程行／棟鑫水電提供台北、新北水電維修與24小時緊急聯絡，處理跳電、漏水、疏通及馬達問題；裝修水電、室內配線與給排水配管等較大型工程可洽詢桃園、基隆。電話0918-808-209，依現場評估報價。",
 
   keywords: [
     "雙北水電",
@@ -82,7 +85,7 @@ export const metadata: Metadata = {
   // Open Graph
   // ================================
   openGraph: {
-    title: "雙北水電｜台北新北24小時水電維修｜棟鑫水電",
+    title: "雙北水電維修・裝修水電工程｜棟鑫水電",
 
     description:
       "棟鑫水電提供台北、新北雙北地區24小時水電維修與水電工程服務，專業處理跳電、漏水、抓漏、水管疏通、馬桶、馬達、室內配線及配電箱維修。",
@@ -203,57 +206,15 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* ==========================================
-            LocalBusiness 結構化資料
-        ========================================== */}
 
-        <Script
-          id="local-business-schema"
-          type="application/ld+json"
-          strategy="afterInteractive"
-        >
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "棟鑫水電",
-            url: "https://www.dongxin24.com/",
-            telephone: "0918808209",
-            image: "https://www.dongxin24.com/case3.jpg",
-            logo: "https://www.dongxin24.com/icon.png",
-
-            description:
-              "棟鑫水電提供台北市、新北市雙北地區24小時水電維修與水電工程服務。",
-
-            areaServed: [
-              {
-                "@type": "City",
-                name: "台北市",
-              },
-              {
-                "@type": "City",
-                name: "新北市",
-              },
-            ],
-
-            serviceType: [
-              "水電維修",
-              "水電急修",
-              "漏水抓漏",
-              "跳電維修",
-              "水管疏通",
-              "馬桶疏通",
-              "抽水馬達維修",
-              "加壓馬達維修",
-              "室內配線",
-              "配電箱維修",
-              "衛浴工程",
-            ],
-          })}
-        </Script>
       </head>
 
       <body>
+        <Schema />
+        <a className="skip-link" href="#main-content">跳到主要內容</a>
+        <Navbar />
         {children}
+        <Footer />
 
         {/* ================================
             浮動電話 / LINE 按鈕

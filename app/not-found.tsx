@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main
+    <main id="main-content"
       style={{
         minHeight: "100vh",
         display: "flex",

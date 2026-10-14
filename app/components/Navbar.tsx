@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { PhoneIcon } from "./ContactActions";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,6 +13,12 @@ export default function Navbar() {
   return (
     <>
       <header
+        onKeyDown={(event) => {
+          if (event.key === "Escape" && menuOpen) {
+            closeMenu();
+            event.currentTarget.querySelector<HTMLButtonElement>(".mobile-menu-button")?.focus();
+          }
+        }}
         style={{
           position: "fixed",
           top: 0,
@@ -20,7 +27,6 @@ export default function Navbar() {
           zIndex: 9998,
           background: "rgba(15,23,42,.97)",
           borderBottom: "1px solid rgba(255,255,255,.08)",
-          backdropFilter: "blur(12px)",
         }}
       >
         <nav
@@ -74,7 +80,11 @@ export default function Navbar() {
               服務項目
             </Link>
 
-            <Link href="/#gallery" className="nav-link">
+            <Link href="/shui-dian-gong-cheng" className="nav-link">
+              裝修工程
+            </Link>
+
+            <Link href="/projects" className="nav-link">
               工程案例
             </Link>
 
@@ -106,7 +116,7 @@ export default function Navbar() {
                 whiteSpace: "nowrap",
               }}
             >
-              📞 0918-808-209
+              <PhoneIcon />&nbsp;0918-808-209
             </a>
           </div>
 
@@ -169,7 +179,11 @@ export default function Navbar() {
               服務項目
             </Link>
 
-            <Link href="/#gallery" onClick={closeMenu}>
+            <Link href="/shui-dian-gong-cheng" onClick={closeMenu}>
+              裝修工程
+            </Link>
+
+            <Link href="/projects" onClick={closeMenu}>
               工程案例
             </Link>
 
@@ -215,7 +229,7 @@ export default function Navbar() {
                 textAlign: "center",
               }}
             >
-              📞 立即來電
+              立即來電
             </a>
           </div>
         )}
