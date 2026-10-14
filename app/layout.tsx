@@ -139,7 +139,7 @@ export default function RootLayout({
 
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KQMV13X0NC"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
 
         <Script id="google-tag" strategy="beforeInteractive">

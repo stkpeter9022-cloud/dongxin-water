@@ -49,3 +49,5 @@ next-env.d.ts
 /audit/tools/
 /audit/baseline-project/
 /audit/*.patch
+/audit/performance-before/
+/audit/*.zip
