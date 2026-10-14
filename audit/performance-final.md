@@ -39,3 +39,25 @@ LCP 中位數減少約 35%、TBT 約 48%；main-thread 中位數 32.24 → 17.09
 - 部署只更新 preview/mobile-contact-audit-20261014；不推 main、不發布正式站。備份、工具 dependencies、憑證、測量 JSON／HTML／截圖排除提交。
 
 完整 raw report／trace 留在忽略的 audit/perf-before-*、perf-after-*、perf-final-*。Preview 實測另行記錄，不與以上 localhost 中位數混用。
+
+## 已部署 Preview
+
+來源 commit：5696ebd597fbd4e20bdc4ed5968940286fadd78c；GitHub Vercel status success，deployment 7061852487，environment Preview。
+
+- 固定部署：https://dongxin-water-r818pj3ml-stkpeter9022-clouds-projects.vercel.app
+- 已授權並驗證的分支網址：https://dongxin-water-git-preview-m-b15c20-stkpeter9022-clouds-projects.vercel.app
+- Preview 13 頁 × 2 種尺寸／161 個聯絡按鈕全部通過；真實 Google loader／四組 config／SPA 去重檢查通過。手機首頁／頁尾及電腦服務頁截圖已檢視。
+- build、lint 通過；git working tree 在提交後乾淨，main 遠端仍是 1b9cc6d4ecfedf9c14b954aae2438de02556c8ea。
+
+以下三次使用相同 Lighthouse 設定、實際 Google 追蹤啟用、獨立 fresh Chrome、分享授權 cookie（報告網址不帶秘密），均 valid=true、無 warnings/errors。屬於單独的 Preview 測試，不用它和本機前值計算改善率。
+
+|Preview 次數|效能|LCP 秒|CLS|TBT 毫秒|
+|---|---:|---:|---:|---:|
+|1|32|11.962|0|17329.617|
+|2|32|12.531|0|18500.718|
+|3|30|6.844|0|6203.332|
+|**中位數**|**32**|**11.962**|**0**|**17329.617**|
+
+benchmarkIndex 1366／1273／1781.5，主機速度波動明顯。第一輪首頁圖片約 131.8 KB、2.58 秒下載完成，但 render delay 約 9.38 秒；trace 的初始 Layout 仍有 5.95 秒（71 objects），另一個 Layout 3.23 秒（252 objects）。GA／Ads SDK 在後段仍有長工作。因此剩餘問題包含版面計算與第三方 SDK，不能單靠刪除追蹤或再壓縮圖片宣稱解決。
+
+發布判斷：沒有發現功能、建置、連結或事件重複的發布阻擋；效能仍偏低，是實際的品質問題，尚不建議宣称效能達標。這次只完成 Preview。正式發布仍需對剩餘效能風險作發布決策，再合併／提升至 Production，並驗證正式網域及 Google 後台事件收集；本次測試不等於實際撥號接通或後台轉換核准。分享授權檔在驗證後移除，沒有提交或放入報告。
