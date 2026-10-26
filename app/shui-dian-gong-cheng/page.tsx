@@ -25,5 +25,5 @@ export default function EngineeringPage(){return <main id="main-content" classNa
     <h2>哪些條件會影響工程費用？</h2><p>迴路與出線點數量、線徑與施工距離、管材與管路長度、明暗管選擇、拆除打鑿、現場保護、進出動線與分階段施工，都可能影響材料及工時。照片可協助初步了解，實際報價仍以現場確認為準。</p>
     <div className="scope-note"><h2>工程服務範圍</h2><p>較大型工程可承接台北、新北、桃園、基隆，依工項與排程評估。一般水電維修與24小時緊急叫修主要服務台北、新北。</p></div>
     <h2>看看現有施工紀錄</h2><p>可參考<Link href="/projects#panel">配電箱線路檢修</Link>與<Link href="/projects#piping">管路配接現場</Link>。照片呈現現有作業內容，個別案件仍需獨立評估。</p>
-    <h2>裝修水電常見問題</h2><PageFaqs items={faqs} />
+    <p><Link className="text-link" href="/knowledge/renovation-wiring">裝潢前先了解：老屋換線、設備配置與施工介面 →</Link></p><h2>裝修水電常見問題</h2><PageFaqs items={faqs} />
   </div></section></main>;}

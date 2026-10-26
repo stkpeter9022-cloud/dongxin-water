@@ -195,7 +195,7 @@ export default function Navbar() {
               關於棟鑫水電
             </Link>
 
-            <Link href="/contact" onClick={closeMenu}>
+            <Link href="/knowledge" onClick={closeMenu}>水電知識</Link><Link href="/contact" onClick={closeMenu}>
               聯絡我們
             </Link>
 

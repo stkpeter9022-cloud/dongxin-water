@@ -7,7 +7,8 @@ const label = process.argv[2] || 'after';
 const baseUrl = (process.argv[3] || 'http://localhost:3000').replace(/\/$/, '');
 const browser = await chromium.launch({executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true});
 const results = [];
-const routes = ['/', ...fs.readdirSync('app', {withFileTypes:true}).filter(d => d.isDirectory() && fs.existsSync(`app/${d.name}/page.tsx`)).map(d => `/${d.name}`), '/missing-audit-page'];
+const guideRoutes = fs.existsSync('app/lib/knowledge.ts') ? [...fs.readFileSync('app/lib/knowledge.ts','utf8').matchAll(/slug: "([^"]+)"/g)].map(match => '/knowledge/' + match[1]) : [];
+const routes = ['/', ...fs.readdirSync('app', {withFileTypes:true}).filter(d => d.isDirectory() && fs.existsSync(`app/${d.name}/page.tsx`)).map(d => `/${d.name}`), ...guideRoutes, '/missing-audit-page'];
 try {
   for (const viewport of [{width:390,height:844}, {width:1440,height:900}]) {
     const context = await browser.newContext({viewport, deviceScaleFactor:1});

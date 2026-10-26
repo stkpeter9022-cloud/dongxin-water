@@ -41,7 +41,7 @@ try {
         assert.equal(geometry.projectCount,3);assert.equal(geometry.smallParagraphs,0);
         for(const id of ['services','engineering','gallery','areas','faq']) {
           await page.evaluate(id=>{document.documentElement.style.scrollBehavior='auto';location.hash=id;},id);
-          await page.waitForFunction(id=>{const top=document.getElementById(id).getBoundingClientRect().top;return top>=72&&top<=100;},id);
+          await page.waitForFunction(id=>{const top=document.getElementById(id).getBoundingClientRect().top;return top>=72&&top<=100;},id).catch(async error=>{console.log(JSON.stringify({width,id,geometry:await page.evaluate(id=>({top:document.getElementById(id).getBoundingClientRect().top,scrollY,max:document.documentElement.scrollHeight-innerHeight}),id)}));throw error;});
         }
         const faqs=page.locator('#faq details');
         await faqs.nth(1).locator('summary').focus();await page.keyboard.press('Enter');

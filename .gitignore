@@ -51,3 +51,4 @@ next-env.d.ts
 /audit/*.patch
 /audit/performance-before/
 /audit/*.zip
+/audit/round2-media/

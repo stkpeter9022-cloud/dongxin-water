@@ -1,6 +1,7 @@
 export const siteUrl = "https://www.dongxin24.com";
 export const phoneUrl = "tel:0918808209";
 export const lineUrl = "https://line.me/ti/p/ezn_Ad6UpZ";
+export const businessProfileUrl = "https://maps.google.com/maps?cid=6019854245195806753";
 
 export const repairs = [
   { title: "跳電與漏電", desc: "跳電、斷電與配電箱故障檢查。", href: "/tiao-dian" },
@@ -30,6 +31,7 @@ export const projects = [
   { id: "breaker", image: "/case10.jpg", title: "斷路器損壞檢查", text: "損壞開關與配電設備的現場檢查紀錄。", href: "/tiao-dian", service: "電路與配電箱檢修" },
 ];
 export const homeFaqs = [
+  { q: "找附近水電行，棟鑫有提供到府維修或材料零售嗎？", a: "棟鑫水電工程行以台北、新北到府維修與工程為主，非水電材料零售。中和、板橋、永和、三重、新莊、新店與台北各區可先提供位置及故障狀況；距離與到場時間依實際派工確認，不以最近或保證幾分鐘到場作承諾。出工費事先說明，材料與施工費另計，現場評估並確認報價後施工。" },
   { q: "有提供24小時緊急水電維修嗎？", a: "有，台北市、新北市提供24小時緊急水電聯絡服務。跳電、漏水、堵塞或馬達故障可先來電；實際派工時間依位置、案件狀況與當日安排為準。" },
   { q: "桃園、基隆也可以詢問嗎？", a: "桃園、基隆可洽詢裝修水電、室內配線、老屋換線、給排水配管等較大型工程，依工程內容與排程評估。一般維修與24小時緊急叫修主要服務台北、新北。" },
   { q: "維修與工程如何評估報價？", a: "可先提供位置、問題或工程需求、照片及設備型號。現場確認管線、材料、施工方式與難度後，再說明施工內容與費用；需要追加材料或工項時會另行說明。" },

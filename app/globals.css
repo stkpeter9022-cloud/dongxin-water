@@ -1,4 +1,32 @@
 @import "tailwindcss";
+.knowledge-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.knowledge-card { padding:28px; border:1px solid #dce2e9; border-top:3px solid #d6a52c; border-radius:12px; background:#fff; }
+.knowledge-card h2,.knowledge-card h3 { font-size:23px; line-height:1.5; margin-bottom:16px; }
+.knowledge-card h2 a,.knowledge-card h3 a { text-decoration:none; }
+.knowledge-card p { color:#475569; }
+.guide-body { font-size:18px; line-height:1.9; }
+.guide-section { margin-block:40px; scroll-margin-top:96px; }
+.guide-toc { padding:24px; background:#f4f6f8; border-radius:12px; }
+.guide-byline { font-size:16px; }
+.guide-sources { font-size:16px; border-top:1px solid #dce2e9; padding-top:16px; margin-block:32px; }
+.project-grid.project-records { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; }
+.project-records .project-card { display:block; }
+.project-records .project-image-link { overflow:hidden; }
+.project-records .project-image-link img { aspect-ratio:4/3; width:100%; height:auto; min-height:0; }
+.project-detail { border-top:1px solid #e2e8f0; padding-top:12px; }
+.project-detail h3 { font-size:17px; margin:16px 0 8px; color:#805900; }
+.project-detail p { font-size:16px; }
+.home-main #knowledge { --section-size:460px; }
+/* Resolve real section heights for fragment navigation, instead of placeholder estimates. */
+.home-main:has(section:target) > section:not(.home-hero) { content-visibility:visible; }
+@media(max-width:767px) {
+  .knowledge-grid,.project-grid.project-records { grid-template-columns:minmax(0,1fr); }
+  .knowledge-card { padding:22px; }
+  .knowledge-card h2,.knowledge-card h3 { font-size:21px; }
+  .guide-body { font-size:17px; }
+  .guide-toc { padding:16px; }
+  .home-main #knowledge { --section-size:780px; }
+}
 :root { --background:#fff; --foreground:#111827; --primary:#111827; --accent:#d6a52c; --accent-light:#fff4d6; --text-main:#111827; --text-secondary:#475569; --border:#e2e8f0; --section-light:#f5f6f7; --dock-height:64px; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -45,10 +73,38 @@ section[id],article[id],main[id] { scroll-margin-top:88px; }
 .service-card { background:#fff; border:1px solid #dce2e9; border-radius:9px; padding:20px; text-decoration:none; }
 .service-card:hover { border-color:#a77a16; background:#fffcf3; }
 @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
-  .service-card, .project-card { transition:transform 220ms ease, box-shadow 220ms ease; }
+  .service-card, .project-card { transition:transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease; }
   .service-card:hover, .service-card:focus-visible, .project-card:hover {
-    transform:perspective(1000px) translateY(-4px) rotateX(1deg);
-    box-shadow:0 12px 24px rgba(15,23,42,.12);
+    transform:perspective(900px) translateY(-7px) rotateX(3deg) rotateY(-1deg);
+    box-shadow:0 18px 34px rgba(15,23,42,.16),0 0 0 1px rgba(214,165,44,.35);
+  }
+}
+@media (hover:none) and (prefers-reduced-motion:no-preference) {
+  .service-card:active { transform:scale(.98); background:#fff4d6; }
+}
+html { view-transition-name:none; }
+.route-transition #main-content { view-transition-name:page; }
+/* Keep fixed controls outside the snapshot and its paint area so they remain hit-testable. */
+::view-transition { pointer-events:none; clip-path:inset(72px 0 calc(var(--dock-height) + env(safe-area-inset-bottom)) 0); }
+::view-transition-group(page) { animation:none; z-index:0; }
+::view-transition-old(page),::view-transition-new(page) { transform-origin:50% 80px; mix-blend-mode:normal; }
+::view-transition-old(page) { animation:page-depth-out 180ms cubic-bezier(.2,.7,.2,1) both; }
+::view-transition-new(page) { animation:page-depth-in 420ms cubic-bezier(.2,.7,.2,1) both; }
+@keyframes page-depth-out {
+  to { opacity:0; transform:perspective(1200px) translateY(-10px) translateZ(-100px) rotateX(4deg) scale(.94); }
+}
+@keyframes page-depth-in {
+  from { opacity:0; transform:perspective(1200px) translateY(30px) rotateX(-4deg) scale(.94); }
+  to { opacity:1; transform:none; }
+}
+@media(max-width:767px) {
+  ::view-transition-old(page) { animation-duration:150ms; }
+  ::view-transition-new(page) { animation-duration:320ms; }
+}
+@supports(animation-timeline:scroll()) {
+  @media(prefers-reduced-motion:no-preference) and (min-width:768px) {
+    .hero-photo { animation:hero-depth linear both; animation-timeline:scroll(root block); animation-range:0px 550px; }
+    @keyframes hero-depth { to { transform:perspective(1200px) translateY(-20px) rotateX(2deg) scale(.98); } }
   }
 }
 .service-card h3 { display:flex; justify-content:space-between; gap:8px; font-size:20px; margin-bottom:8px; }

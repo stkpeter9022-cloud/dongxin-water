@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
+import { guides } from "./lib/knowledge";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.dongxin24.com";
 
   return [
+    ...["/knowledge", ...guides.map(guide => `/knowledge/${guide.slug}`)].map(path => ({ url: baseUrl + path, lastModified: "2026-10-27" })),
     ...["/projects", "/shui-dian-gong-cheng", "/gei-pai-shui"].map(path => ({ url: baseUrl + path, lastModified: "2026-10-27" })),
     {
       url: baseUrl,
