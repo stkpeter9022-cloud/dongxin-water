@@ -1,0 +1,65 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { chromium } from './tools/node_modules/playwright/index.mjs';
+
+const base = process.argv[2] || 'http://localhost:3102';
+const label = process.argv[3] || 'seo-motion-local';
+const browser = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
+try {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+  await context.route(/googletagmanager|google-analytics|googleadservices|doubleclick/, r => r.abort());
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  const routes = ['/', ...fs.readdirSync('app', { withFileTypes: true }).filter(d => d.isDirectory() && fs.existsSync(`app/${d.name}/page.tsx`)).map(d => '/' + d.name)];
+  const pages = [];
+  for (const route of routes) {
+    const response = await page.goto(base + route);
+    assert.equal(response.status(), 200);
+    const html = await response.text();
+    const data = await page.evaluate(() => ({ title: document.title, description: document.querySelector('meta[name="description"]')?.content, canonical: document.querySelector('link[rel="canonical"]')?.href, h1: [...document.querySelectorAll('h1')].map(e => e.textContent), noindex: document.querySelector('meta[name="robots"]')?.content.includes('noindex'), faqs: document.querySelectorAll('main details').length }));
+    assert.equal(data.h1.length, 1);
+    assert.ok(/<h1[\s>]/.test(html) && html.match(/<h1[\s\S]*?<\/h1>/)?.[0].replace(/<[^>]+>/g, '').trim().length > 0, route + ' text absent from initial HTML');
+    assert.ok(data.description);
+    assert.equal(data.noindex, false);
+    assert.equal(data.canonical, 'https://www.dongxin24.com' + (route === '/' ? '/' : route));
+    if (!['/', '/about', '/contact', '/projects'].includes(route)) assert.ok(data.faqs > 0, route + ' missing FAQ');
+    pages.push({ route, ...data });
+  }
+  assert.equal(new Set(pages.map(p => p.title)).size, routes.length);
+  assert.equal(new Set(pages.map(p => p.description)).size, routes.length);
+  await page.goto(base);
+  await page.locator('header a[href="/projects"]').first().click();
+  await page.waitForURL('**/projects');
+  await page.goBack();
+  await page.waitForURL(base + '/');
+  await page.waitForTimeout(300);
+  assert.equal(await page.locator('main').evaluate(e => getComputedStyle(e).transform), 'none');
+  await page.locator('.service-card').first().hover();
+  await page.waitForTimeout(250);
+  assert.notEqual(await page.locator('.service-card').first().evaluate(e => getComputedStyle(e).transform), 'none');
+  await page.mouse.move(0, 0);
+  await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; scrollTo(0, 0); });
+  await page.screenshot({ path: `audit/${label}-1440.png` });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto(base);
+  await page.locator('.service-card').first().hover();
+  assert.equal(await page.locator('.service-card').first().evaluate(e => getComputedStyle(e).transform), 'none');
+  assert.equal(await page.locator('main').evaluate(e => e.getAnimations({ subtree: true }).length), 0);
+  const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  await phone.route(/googletagmanager/, r => r.abort());
+  const mobile = await phone.newPage();
+  await mobile.goto(base);
+  await mobile.screenshot({ path: `audit/${label}-390.png` });
+  await mobile.getByRole('button', { name: '開啟選單' }).click();
+  await mobile.locator('#mobile-navigation a[href="/projects"]').click();
+  await mobile.waitForURL('**/projects');
+  assert.equal(await mobile.locator('main').evaluate(e => e.getAnimations({ subtree: true }).length), 0);
+  await mobile.goBack();
+  await mobile.waitForURL(base + '/');
+  assert.deepEqual(errors, []);
+  const missing = await context.request.get(base + '/missing-seo-audit');
+  assert.equal(missing.status(), 404);
+  fs.writeFileSync(`audit/${label}.json`, JSON.stringify({ pages, desktopNavigationAndBack: true, mobileNavigationAndBack: true, reducedMotion: true, errors }, null, 2));
+  console.log(JSON.stringify({ pages: pages.length, uniqueMetadata: true, navigationAndBack: true, reducedMotion: true, passed: true }));
+} finally { await browser.close(); }

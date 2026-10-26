@@ -4,7 +4,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import ContactActions from "../components/ContactActions";
 import PageFaqs from "../components/PageFaqs";
 export const metadata: Metadata = {
-  title: "裝修水電工程｜住宅翻修、配線與配管規劃｜棟鑫水電",
+  title: "台北新北水電工程・水電裝潢｜配線與配管規劃｜棟鑫水電",
   description: "棟鑫工程行承接住宅、店面與辦公空間裝修水電，整合室內配線、老屋換線、給排水配管及設備位置。較大型工程可洽詢台北、新北、桃園、基隆，依現場條件評估報價。",
   alternates: { canonical: "https://www.dongxin24.com/shui-dian-gong-cheng" },
   openGraph: { title: "裝修水電工程｜棟鑫工程行", description: "依空間、設備與施工階段評估配線與配管。", url: "https://www.dongxin24.com/shui-dian-gong-cheng" },
@@ -16,7 +16,7 @@ const faqs=[
   {q:"報價包含哪些施工與保固內容？",a:"依現場評估與報價確認工項、材料、施工方式及完工確認內容。不同工程與材料的保固範圍、期限依雙方約定，不以單一條件套用所有案件。"},
 ];
 export default function EngineeringPage(){return <main id="main-content" className="content-page"><Breadcrumbs title="裝修水電工程" path="/shui-dian-gong-cheng" />
-  <section className="page-intro"><div className="site-container"><h1>裝修水電工程<br />讓配線、配管配合空間使用</h1><p>住宅翻修、店面與辦公空間，從設備需求、迴路配置到給排水位置，先確認工項與施工條件，再安排施作。</p><ContactActions phoneLabel="工程電話諮詢" /></div></section>
+  <section className="page-intro"><div className="site-container"><h1>台北・新北水電工程與水電裝潢<br />讓配線、配管配合空間使用</h1><p>住宅翻修、店面與辦公空間，從設備需求、迴路配置到給排水位置，先確認工項與施工條件，再安排施作。</p><ContactActions phoneLabel="工程電話諮詢" /></div></section>
   <section className="site-section"><div className="site-container prose"><h2>什麼時候適合整體評估水電？</h2><p>老屋翻修、格局調整、廚衛移位，或新增冷氣與高耗電設備時，單一插座或管路位置可能牽動其他工項。先整理需求，有助於釐清哪些可保留、哪些需更新，避免在裝潢完成後反覆拆改。</p>
     <h3>電力與設備配置</h3><p>評估配電箱、既有線路、插座照明及設備需求，確認是否需要更新電線或增加專用迴路。詳細工項可參考<Link href="/shi-nei-pei-xian">室內配線與老屋換線</Link>。</p>
     <h3>給排水與衛浴位置</h3><p>確認供水來源、冷熱水需求、排水位置與設備銜接，再評估管線路徑、明管或暗管及施作方式。了解<Link href="/gei-pai-shui">給排水配管工程</Link>與<Link href="/wei-yu">衛浴設備安裝</Link>。</p>

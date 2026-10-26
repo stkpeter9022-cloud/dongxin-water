@@ -5,6 +5,7 @@ import FloatingButtons from "./components/FloatingButtons";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Schema from "./components/Schema";
+import PageMotion from "./components/PageMotion";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.dongxin24.com"),
@@ -13,12 +14,12 @@ export const metadata: Metadata = {
   // Google 自然搜尋 SEO
   // ================================
   title: {
-    default: "雙北水電維修・裝修水電工程｜棟鑫水電",
+    default: "台北新北24小時水電行｜水電維修・水電工程｜棟鑫水電",
     template: "%s",
   },
 
   description:
-    "棟鑫工程行／棟鑫水電提供台北、新北水電維修與24小時緊急聯絡，處理跳電、漏水、疏通及馬達問題；裝修水電、室內配線與給排水配管等較大型工程可洽詢桃園、基隆。電話0918-808-209，依現場評估報價。",
+    "棟鑫工程行／棟鑫水電提供台北、新北24小時水電維修聯絡，處理跳電、漏水、通水管、馬桶不通與馬達故障；承接水電工程、水電裝潢、老屋換線及給排水工程。中和、板橋、永和及台北各區可來電0918-808-209，現場評估報價，派工時間依安排確認。",
 
   keywords: [
     "雙北水電",
@@ -85,7 +86,7 @@ export const metadata: Metadata = {
   // Open Graph
   // ================================
   openGraph: {
-    title: "雙北水電維修・裝修水電工程｜棟鑫水電",
+    title: "台北新北24小時水電行｜水電維修・水電工程｜棟鑫水電",
 
     description:
       "棟鑫水電提供台北、新北雙北地區24小時水電維修與水電工程服務，專業處理跳電、漏水、抓漏、水管疏通、馬桶、馬達、室內配線及配電箱維修。",
@@ -214,6 +215,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main-content">跳到主要內容</a>
         <Navbar />
         {children}
+        <PageMotion />
         <Footer />
 
         {/* ================================
