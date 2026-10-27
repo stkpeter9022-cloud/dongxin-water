@@ -5,7 +5,57 @@ import { usePathname, useRouter } from "next/navigation";
 
 const reducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 const saveData = () => (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
-const lightDevice = () => navigator.hardwareConcurrency <= 2 || ((navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8) <= 2;
+// A core-count hint alone (often privacy-limited) must not disable normal phones.
+const lightDevice = () => navigator.hardwareConcurrency <= 2 && ((navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8) <= 2;
+// WebKit's live new-page snapshot can paint blank with 3D transforms. Use the
+// tested DOM-layer path there, including all iOS browsers, rather than a blank frame.
+const nativeSnapshots = () => !!document.startViewTransition && !(/AppleWebKit/.test(navigator.userAgent) && !/Chrome|Chromium|Edg|OPR|SamsungBrowser/.test(navigator.userAgent));
+const retainPage = () => {
+  const main = document.getElementById("main-content");
+  if (!main) return null;
+  const rect = main.getBoundingClientRect();
+  const layer = document.createElement("div");
+  layer.className = "motion-layer";
+  layer.setAttribute("aria-hidden", "true");
+  layer.inert = true;
+  const copy = main.cloneNode(true) as HTMLElement;
+  // Keep only the viewport's content; distant sections become measured spacers.
+  Array.from(copy.children).forEach((child, index) => {
+    const box = main.children[index].getBoundingClientRect();
+    const element = child as HTMLElement;
+    element.style.contentVisibility = "visible";
+    if (box.bottom < 72 || box.top > innerHeight) {
+      element.replaceChildren();
+      element.style.cssText = `height:${box.height}px;padding:0;margin:0;box-sizing:border-box;content-visibility:visible`;
+    }
+  });
+  copy.querySelectorAll("script").forEach(node => node.remove());
+  [copy, ...copy.querySelectorAll("[id]")].forEach(node => node.removeAttribute("id"));
+  copy.style.cssText += `;position:absolute;left:${rect.left}px;top:${rect.top - 72}px;width:${rect.width}px;margin:0;background:#fff;transform-origin:50% ${innerHeight * .45 - rect.top}px`;
+  copy.dataset.motionOutgoing = "true";
+  layer.append(copy);
+  document.body.append(layer);
+  document.documentElement.classList.add("layer-transition");
+  setTimeout(() => {
+    layer.remove();
+    if (!document.querySelector(".motion-layer")) document.documentElement.classList.remove("layer-transition");
+  }, 2000);
+  return { layer, copy };
+};
+const enterPage = () => {
+  if (reducedMotion() || saveData()) return null;
+  const mobile = matchMedia("(max-width: 767px)").matches;
+  const light = lightDevice();
+  const main = document.getElementById("main-content");
+  if (!main) return null;
+  const origin = `50% ${Math.max(150, innerHeight * .45 - main.getBoundingClientRect().top)}px`;
+  const depth = light ? "perspective(900px) translateX(20px) rotateY(-4deg) scale(.96)" : mobile ? "perspective(850px) translateX(38px) translateZ(-24px) rotateY(-6deg) scale(.95)" : "perspective(850px) translateX(90px) translateZ(-65px) rotateY(-10deg) scale(.90)";
+  return main.animate([
+    { opacity: .35, transform: depth, transformOrigin: origin },
+    { opacity: 1, transform: depth, transformOrigin: origin, offset: .18 },
+    { opacity: 1, transform: "none", transformOrigin: origin },
+  ], { duration: light ? 460 : mobile ? 520 : 700, easing: "cubic-bezier(.4,0,.25,1)" });
+};
 
 // Only the main-content snapshot moves. Contact links and server HTML stay live.
 export default function PageMotion() {
@@ -16,6 +66,7 @@ export default function PageMotion() {
   const pendingPath = useRef<string | null>(null);
   const transition = useRef<ViewTransition | null>(null);
   const entrance = useRef<Animation | null>(null);
+  const outgoing = useRef<ReturnType<typeof retainPage>>(null);
 
   useLayoutEffect(() => {
     const changed = previous.current !== pathname;
@@ -28,10 +79,27 @@ export default function PageMotion() {
       }
     } else if (changed && !reducedMotion() && !saveData()) {
       entrance.current?.cancel();
-      entrance.current = document.getElementById("main-content")?.animate([
-        { opacity: 0.35, transform: lightDevice() ? "translateY(14px)" : "perspective(1200px) translateY(28px) rotateY(-2.5deg) scale(.975)", transformOrigin: "50% 100px" },
-        { opacity: 1, transform: "none", transformOrigin: "50% 100px" },
-      ], { duration: 360, easing: "cubic-bezier(.3,.15,.25,1)" }) ?? null;
+      const retained = outgoing.current;
+      if (retained) {
+        const mobile = matchMedia("(max-width: 767px)").matches;
+        retained.copy.animate([
+          { opacity: 1, transform: "perspective(850px) translateX(0) translateZ(0) rotateY(0) scale(1)" },
+          { opacity: 1, transform: mobile ? "perspective(850px) translateX(-30%) translateZ(-30px) rotateY(7deg) scale(.95)" : "perspective(850px) translateX(-32%) translateZ(-90px) rotateY(12deg) scale(.90)", offset: .45 },
+          { opacity: 1, offset: .8 },
+          { opacity: 0, transform: mobile ? "perspective(850px) translateX(-95%) translateZ(-55px) rotateY(8deg) scale(.94)" : "perspective(850px) translateX(-90%) translateZ(-150px) rotateY(14deg) scale(.88)" },
+        ], { duration: mobile ? 520 : 700, easing: "cubic-bezier(.4,0,.6,1)" });
+      }
+      entrance.current = enterPage();
+      void entrance.current?.finished.catch(() => {}).finally(() => {
+        retained?.layer.remove();
+        if (outgoing.current === retained) {
+          outgoing.current = null;
+          document.documentElement.classList.remove("layer-transition");
+        }
+        if (location.pathname === pathname && location.hash) {
+          document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({ behavior: "instant", block: "start" });
+        }
+      });
     }
   }, [pathname]);
 
@@ -42,7 +110,13 @@ export default function PageMotion() {
       if (!link || (link.target && link.target !== "_self") || link.hasAttribute("download")) return;
       const url = new URL(link.href, location.href);
       if (url.origin !== location.origin || url.pathname === location.pathname || /\.[a-z0-9]+$/i.test(url.pathname)) return;
-      if (!document.startViewTransition || lightDevice()) return;
+      outgoing.current?.layer.remove();
+      outgoing.current = null;
+      document.documentElement.classList.remove("layer-transition");
+      if (!nativeSnapshots() || lightDevice()) {
+        if (!lightDevice()) outgoing.current = retainPage();
+        return; // Next's normal Link navigation proceeds immediately.
+      }
       event.preventDefault();
       pending.current?.();
       transition.current?.skipTransition();
@@ -58,7 +132,15 @@ export default function PageMotion() {
         router.push(url.pathname + url.search + url.hash, url.hash ? { scroll: false } : undefined);
       }));
       transition.current = current;
-      void current.ready.catch(() => {});
+      void current.ready.catch(() => {
+        // Snapshot capture may fail even when the API exists (e.g. hidden tabs).
+        void current.updateCallbackDone.then(() => {
+          if (transition.current === current && location.pathname === url.pathname) {
+            entrance.current?.cancel();
+            entrance.current = enterPage();
+          }
+        }).catch(() => {});
+      });
       void current.finished.catch(() => {}).finally(() => {
         if (transition.current === current) {
           transition.current = null;
@@ -76,7 +158,9 @@ export default function PageMotion() {
       pending.current?.();
       transition.current?.skipTransition();
       entrance.current?.cancel();
-      document.documentElement.classList.remove("route-transition");
+      outgoing.current?.layer.remove();
+      outgoing.current = null;
+      document.documentElement.classList.remove("route-transition", "layer-transition");
     };
   }, [router]);
 
@@ -86,7 +170,7 @@ export default function PageMotion() {
     const start = performance.now();
     const mobile = matchMedia("(max-width: 767px)").matches;
     const animate = (element: Element, frames: Keyframe[], delay = 0) => {
-      const animation = element.animate(frames, { duration: lightDevice() ? 300 : mobile ? 400 : 520, delay, easing: "cubic-bezier(.22,.45,.3,1)" });
+      const animation = element.animate(frames, { duration: lightDevice() ? 420 : mobile ? 640 : 820, delay, easing: "cubic-bezier(.3,.1,.25,1)" });
       animations.add(animation);
       void animation.finished.catch(() => {}).finally(() => animations.delete(animation));
     };
@@ -98,18 +182,19 @@ export default function PageMotion() {
         const card = entry.target.classList.contains("service-card");
         const project = entry.target.classList.contains("project-card");
         const engineering = !!entry.target.closest("#engineering");
+        const process = !!entry.target.closest(".process-grid");
         const index = card ? Array.from(entry.target.parentElement!.children).indexOf(entry.target) : 0;
         animate(entry.target, [
-          { opacity: 0.25, transform: lightDevice() ? "translateY(16px)" : project ? "perspective(1000px) translateY(40px) rotateY(3deg) scale(.93)" : engineering ? "perspective(1000px) translateY(36px) rotateX(3deg) scale(.97)" : card ? "perspective(1000px) translateY(42px) rotateY(-3deg) scale(.97)" : "translateY(30px)", transformOrigin: "50% 100%" },
+          { opacity: 0.25, transform: lightDevice() ? "translateY(40px) scale(.96)" : project ? "perspective(850px) translateY(90px) rotateY(9deg) scale(.92)" : engineering ? "perspective(850px) translateY(100px) rotateX(10deg) scale(.93)" : card ? "perspective(850px) translateY(80px) rotateY(-8deg) scale(.94)" : process ? "perspective(850px) translateX(-35px) translateY(75px) rotateY(8deg) scale(.94)" : "perspective(900px) translateY(70px) rotateX(7deg) scale(.96)", transformOrigin: "50% 70%" },
           { opacity: 1, transform: "none", transformOrigin: "50% 100%" },
-        ], card && !lightDevice() ? Math.min(index % 4 * 60, 180) : 0);
+        ], card && !lightDevice() ? Math.min(index % 4 * 85, 255) : 0);
         if (project) {
           const image = entry.target.querySelector("img");
-          if (image && !lightDevice()) animate(image, [{ transform: "scale(1.10)" }, { transform: "scale(1)" }]);
+          if (image && !lightDevice()) animate(image, [{ transform: "translateY(20px) scale(1.16)" }, { transform: "translateY(0) scale(1)" }]);
         }
       }
     }, { threshold: 0.12 });
-    if (!preference.matches && !saveData()) document.querySelectorAll("main .section-heading, main .service-card, main .project-card, main .knowledge-card, main .engineering-brief, main .process-grid li, main .area-grid article").forEach(element => observer.observe(element));
+    if (!preference.matches && !saveData()) document.getElementById("main-content")?.querySelectorAll(".section-heading, .service-card, .project-card, .knowledge-card, .engineering-brief, .process-grid li, .area-grid article").forEach(element => observer.observe(element));
     const stop = () => {
       if (!preference.matches) return;
       animations.forEach(animation => animation.cancel());
@@ -148,8 +233,8 @@ export default function PageMotion() {
       if (frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
-        card?.style.setProperty("--tilt-x", `${(0.5 - y) * 6}deg`);
-        card?.style.setProperty("--tilt-y", `${(x - 0.5) * 6}deg`);
+        card?.style.setProperty("--tilt-x", `${(0.5 - y) * 14}deg`);
+        card?.style.setProperty("--tilt-y", `${(x - 0.5) * 14}deg`);
         card?.style.setProperty("--shine-x", `${x * 100}%`);
         card?.style.setProperty("--shine-y", `${y * 100}%`);
       });

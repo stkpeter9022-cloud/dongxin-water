@@ -52,3 +52,4 @@ next-env.d.ts
 /audit/performance-before/
 /audit/*.zip
 /audit/round2-media/
+/audit/browsers/

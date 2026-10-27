@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "backups/**",
     "audit/tools/**",
+    "audit/browsers/**",
     "audit/baseline-project/**",
     "audit/performance-before/**",
     ".audit-cache/**",
