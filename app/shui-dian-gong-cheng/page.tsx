@@ -5,7 +5,7 @@ import ContactActions from "../components/ContactActions";
 import PageFaqs from "../components/PageFaqs";
 export const metadata: Metadata = {
   title: "台北新北水電工程・水電裝潢｜配線與配管規劃｜棟鑫水電",
-  description: "棟鑫工程行承接住宅、店面與辦公空間裝修水電，整合室內配線、老屋換線、給排水配管及設備位置。較大型工程可洽詢台北、新北、桃園、基隆，依現場條件評估報價。",
+  description: "棟鑫工程行承接台北、新北住宅裝修水電、店面及辦公空間工程，整合室內配線、老屋換線、給排水與設備位置。先確認圖面、材料工項及工班介面，再依現場條件報價施工。",
   alternates: { canonical: "https://www.dongxin24.com/shui-dian-gong-cheng" },
   openGraph: { title: "裝修水電工程｜棟鑫工程行", description: "依空間、設備與施工階段評估配線與配管。", url: "https://www.dongxin24.com/shui-dian-gong-cheng" },
 };
@@ -18,6 +18,7 @@ const faqs=[
 export default function EngineeringPage(){return <main id="main-content" className="content-page"><Breadcrumbs title="裝修水電工程" path="/shui-dian-gong-cheng" />
   <section className="page-intro"><div className="site-container"><h1>台北・新北水電工程與水電裝潢<br />讓配線、配管配合空間使用</h1><p>住宅翻修、店面與辦公空間，從設備需求、迴路配置到給排水位置，先確認工項與施工條件，再安排施作。</p><ContactActions phoneLabel="工程電話諮詢" /></div></section>
   <section className="site-section"><div className="site-container prose"><h2>什麼時候適合整體評估水電？</h2><p>老屋翻修、格局調整、廚衛移位，或新增冷氣與高耗電設備時，單一插座或管路位置可能牽動其他工項。先整理需求，有助於釐清哪些可保留、哪些需更新，避免在裝潢完成後反覆拆改。</p>
+    <section className="engineering-brief"><h2>雙北裝潢水電，先把範圍說清楚</h2><p>台北市與新北市住宅、店面翻修，可先提供施工區域、空間現況與預計設備位置。中和、板橋、永和等區域的工程，也依實際位置、工項與排程確認勘查安排，不以地區名稱套用固定報價。</p><dl><div><dt>規劃前</dt><dd>整理設備清單、點位與現況，確認哪些線路或管路可保留。</dd></div><div><dt>施工前</dt><dd>列明材料規格、迴路與點位、配管範圍，以及打鑿、清運和復原的責任。</dd></div><div><dt>交付時</dt><dd>依約定確認設備功能、管線紀錄及保固內容；隱蔽工程的拍照與檢查應在封板前安排。</dd></div></dl><p>局部換線可先看<Link href="/shi-nei-pei-xian">室內配線</Link>，廚衛移位可看<Link href="/gei-pai-shui">給排水工程</Link>；突然跳電或漏水，則由<Link href="/#services">緊急維修入口</Link>聯絡。</p></section>
     <h3>電力與設備配置</h3><p>評估配電箱、既有線路、插座照明及設備需求，確認是否需要更新電線或增加專用迴路。詳細工項可參考<Link href="/shi-nei-pei-xian">室內配線與老屋換線</Link>。</p>
     <h3>給排水與衛浴位置</h3><p>確認供水來源、冷熱水需求、排水位置與設備銜接，再評估管線路徑、明管或暗管及施作方式。了解<Link href="/gei-pai-shui">給排水配管工程</Link>與<Link href="/wei-yu">衛浴設備安裝</Link>。</p>
     <h2>工程評估前，準備這些資訊</h2><ul><li>施工所在縣市、空間用途與預計施作範圍。</li><li>現況照片、平面配置、設備位置與可提供的尺寸。</li><li>預計進場時段、其他工班的施工階段，以及是否有人居住或營業。</li></ul>

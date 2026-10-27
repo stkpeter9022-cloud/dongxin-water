@@ -28,6 +28,20 @@ try {
     if(route!=='/')assert.equal(data.schemas.filter(s=>s['@type']==='BreadcrumbList').length,1);
     assert.ok(data.schemas.some(s=>s['@id']==='https://www.dongxin24.com/#business'&&s.name==='棟鑫水電工程行'));
     for(const link of data.links.filter(h=>h.startsWith('/'))) targets.add(link);
+    for(const link of data.links.filter(h=>h.startsWith('#')&&h.length>1)) assert.equal(await page.locator('[id='+JSON.stringify(decodeURIComponent(link.slice(1)))+']').count(),1,route+' missing anchor '+link);
+    if(route==='/projects') {
+      const collection=data.schemas.find(s=>s['@type']==='CollectionPage');
+      assert.equal(collection?.mainEntity?.itemListElement?.length,8);
+      assert.equal(await page.locator('.project-index a').count(),8);
+      await page.locator('.project-index summary').click();
+      await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';});
+      await page.locator('.project-index a[href="#panel"]').click();
+      await page.waitForFunction(()=>{const top=document.getElementById('panel').getBoundingClientRect().top;return top>=72&&top<=110;});
+    }
+    if(route==='/tiao-dian') {
+      assert.ok(data.text.includes('先記下發生時間'));
+      assert.ok(!data.text.includes('包含中和、板橋、永和、三重、新莊、新店'));
+    }
     if(route.startsWith('/knowledge/')) {
       assert.ok(data.text.includes('聯絡前，準備這些資訊'));
       assert.ok(data.text.includes('依問題選擇服務'));

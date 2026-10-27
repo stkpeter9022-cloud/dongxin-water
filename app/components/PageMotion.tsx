@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 const reducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 const saveData = () => (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+const lightDevice = () => navigator.hardwareConcurrency <= 2 || ((navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8) <= 2;
 
 // Only the main-content snapshot moves. Contact links and server HTML stay live.
 export default function PageMotion() {
@@ -28,9 +29,9 @@ export default function PageMotion() {
     } else if (changed && !reducedMotion() && !saveData()) {
       entrance.current?.cancel();
       entrance.current = document.getElementById("main-content")?.animate([
-        { opacity: 0.5, transform: "perspective(1200px) translateY(20px) rotateX(2deg) scale(.96)", transformOrigin: "50% 100px" },
+        { opacity: 0.35, transform: lightDevice() ? "translateY(14px)" : "perspective(1200px) translateY(28px) rotateY(-2.5deg) scale(.975)", transformOrigin: "50% 100px" },
         { opacity: 1, transform: "none", transformOrigin: "50% 100px" },
-      ], { duration: 360, easing: "cubic-bezier(.2,.7,.2,1)" }) ?? null;
+      ], { duration: 360, easing: "cubic-bezier(.3,.15,.25,1)" }) ?? null;
     }
   }, [pathname]);
 
@@ -41,7 +42,7 @@ export default function PageMotion() {
       if (!link || (link.target && link.target !== "_self") || link.hasAttribute("download")) return;
       const url = new URL(link.href, location.href);
       if (url.origin !== location.origin || url.pathname === location.pathname || /\.[a-z0-9]+$/i.test(url.pathname)) return;
-      if (!document.startViewTransition) return;
+      if (!document.startViewTransition || lightDevice()) return;
       event.preventDefault();
       pending.current?.();
       transition.current?.skipTransition();
@@ -54,7 +55,7 @@ export default function PageMotion() {
         pending.current = finish;
         pendingPath.current = url.pathname;
         timer = setTimeout(() => { if (pending.current === finish) { pending.current = null; pendingPath.current = null; } current.skipTransition(); resolve(); }, 1000);
-        router.push(url.pathname + url.search + url.hash);
+        router.push(url.pathname + url.search + url.hash, url.hash ? { scroll: false } : undefined);
       }));
       transition.current = current;
       void current.ready.catch(() => {});
@@ -62,6 +63,10 @@ export default function PageMotion() {
         if (transition.current === current) {
           transition.current = null;
           document.documentElement.classList.remove("route-transition");
+          // Resolve explicit fragment navigation after snapshot/layout settling.
+          if (url.hash && location.pathname === url.pathname && location.hash === url.hash) {
+            document.getElementById(decodeURIComponent(url.hash.slice(1)))?.scrollIntoView({ behavior: "instant", block: "start" });
+          }
         }
       });
     };
@@ -81,7 +86,7 @@ export default function PageMotion() {
     const start = performance.now();
     const mobile = matchMedia("(max-width: 767px)").matches;
     const animate = (element: Element, frames: Keyframe[], delay = 0) => {
-      const animation = element.animate(frames, { duration: mobile ? 380 : 500, delay, easing: "cubic-bezier(.2,.7,.2,1)" });
+      const animation = element.animate(frames, { duration: lightDevice() ? 300 : mobile ? 400 : 520, delay, easing: "cubic-bezier(.22,.45,.3,1)" });
       animations.add(animation);
       void animation.finished.catch(() => {}).finally(() => animations.delete(animation));
     };
@@ -95,16 +100,16 @@ export default function PageMotion() {
         const engineering = !!entry.target.closest("#engineering");
         const index = card ? Array.from(entry.target.parentElement!.children).indexOf(entry.target) : 0;
         animate(entry.target, [
-          { opacity: 0.4, transform: project ? "perspective(1000px) translateY(28px) scale(.95)" : engineering ? "perspective(1000px) translateY(26px) rotateX(5deg)" : card ? "perspective(1000px) translateY(30px) rotateY(-3deg)" : "translateY(22px)", transformOrigin: "50% 100%" },
+          { opacity: 0.25, transform: lightDevice() ? "translateY(16px)" : project ? "perspective(1000px) translateY(40px) rotateY(3deg) scale(.93)" : engineering ? "perspective(1000px) translateY(36px) rotateX(3deg) scale(.97)" : card ? "perspective(1000px) translateY(42px) rotateY(-3deg) scale(.97)" : "translateY(30px)", transformOrigin: "50% 100%" },
           { opacity: 1, transform: "none", transformOrigin: "50% 100%" },
-        ], card ? Math.min(index % 4 * 45, 135) : 0);
+        ], card && !lightDevice() ? Math.min(index % 4 * 60, 180) : 0);
         if (project) {
           const image = entry.target.querySelector("img");
-          if (image) animate(image, [{ transform: "scale(1.07)" }, { transform: "scale(1)" }]);
+          if (image && !lightDevice()) animate(image, [{ transform: "scale(1.10)" }, { transform: "scale(1)" }]);
         }
       }
     }, { threshold: 0.12 });
-    if (!preference.matches && !saveData()) document.querySelectorAll("main .section-heading, main .service-card, main .project-card, main .process-grid li, main .area-grid article").forEach(element => observer.observe(element));
+    if (!preference.matches && !saveData()) document.querySelectorAll("main .section-heading, main .service-card, main .project-card, main .knowledge-card, main .engineering-brief, main .process-grid li, main .area-grid article").forEach(element => observer.observe(element));
     const stop = () => {
       if (!preference.matches) return;
       animations.forEach(animation => animation.cancel());
@@ -116,6 +121,47 @@ export default function PageMotion() {
       observer.disconnect();
       preference.removeEventListener("change", stop);
       animations.forEach(animation => animation.cancel());
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!matchMedia("(hover: hover) and (pointer: fine)").matches || reducedMotion() || saveData() || lightDevice()) return;
+    let card: HTMLElement | null = null;
+    let rect: DOMRect | null = null;
+    let frame = 0;
+    let x = 0;
+    let y = 0;
+    const reset = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      if (card) for (const name of ["--tilt-x", "--tilt-y", "--shine-x", "--shine-y"]) card.style.removeProperty(name);
+      card = null;
+      rect = null;
+    };
+    const move = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target.closest<HTMLElement>(".service-card, .project-card, .knowledge-card") : null;
+      if (!target || reducedMotion() || saveData()) { reset(); return; }
+      if (target !== card) { reset(); card = target; rect = target.getBoundingClientRect(); }
+      if (!rect) return;
+      x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+      y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        card?.style.setProperty("--tilt-x", `${(0.5 - y) * 6}deg`);
+        card?.style.setProperty("--tilt-y", `${(x - 0.5) * 6}deg`);
+        card?.style.setProperty("--shine-x", `${x * 100}%`);
+        card?.style.setProperty("--shine-y", `${y * 100}%`);
+      });
+    };
+    document.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("scroll", reset, { passive: true });
+    window.addEventListener("blur", reset);
+    return () => {
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("scroll", reset);
+      window.removeEventListener("blur", reset);
+      reset();
     };
   }, [pathname]);
   return null;

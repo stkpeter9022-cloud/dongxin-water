@@ -72,7 +72,7 @@ try {
     if (mode === 'after') {
       assert.ok(reveal.length > 5, 'No scroll reveal ' + mobile);
       assert.ok(log.filter(e => e.kind === 'native').length >= 4, 'No native page transition ' + mobile);
-      assert.ok(log.some(e => e.kind === 'native' && e.animations.some(a => a.name === 'page-depth-in')));
+      assert.ok(log.some(e => e.kind === 'native' && e.animations.some(a => ['page-depth-in','page-depth-mobile'].includes(a.name))));
       await page.evaluate(() => { window.freezeNextTransition = true; });
       if (mobile) await page.getByRole('button', { name: '開啟選單' }).click();
       await page.locator(mobile ? '#mobile-navigation a[href="/shui-dian-gong-cheng"]' : 'header a[href="/shui-dian-gong-cheng"]').first().click();
@@ -94,6 +94,8 @@ try {
       await page.waitForURL(base + '/about');
       await page.waitForTimeout(1200);
       assert.equal(await page.locator('html').evaluate(e => e.classList.contains('route-transition')), false, 'Rapid navigation left a snapshot');
+      await nav('/#areas');
+      await page.waitForFunction(()=>{const top=document.getElementById('areas').getBoundingClientRect().top;return top>=72&&top<=110;});
     }
     assert.deepEqual(errors, []);
     const video = page.video();
