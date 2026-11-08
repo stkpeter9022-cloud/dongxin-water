@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...["/projects", "/shui-dian-gong-cheng", "/gei-pai-shui"].map(path => ({ url: baseUrl + path, lastModified: "2026-10-27" })),
     {
       url: baseUrl,
-      lastModified: "2026-10-27",
+      lastModified: "2026-11-09",
       changeFrequency: "daily",
       priority: 1,
     },
@@ -21,13 +21,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/zhua-lou`,
-      lastModified: "2026-10-27",
+      lastModified: "2026-11-09",
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/tiao-dian`,
-      lastModified: "2026-10-27",
+      lastModified: "2026-11-09",
       changeFrequency: "weekly",
       priority: 0.9,
     },

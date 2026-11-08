@@ -1,22 +1,24 @@
 import Breadcrumbs from "../components/Breadcrumbs";
 import ServiceContext from "../components/ServiceContext";
 import PageFaqs from "../components/PageFaqs";
+import ServiceBooking from "../components/ServiceBooking";
+import ServicePhotos from "../components/ServicePhotos";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "台北新北抓漏｜漏水檢測與滲水原因檢查｜棟鑫水電",
+  title: "台北新北抓漏｜基本抓漏3000元・漏水檢測｜棟鑫工程行",
 
   description:
-    "棟鑫水電提供台北、新北雙北抓漏與漏水檢測服務，協助檢查牆面滲水、天花板漏水、浴室漏水、水管漏水及不明水痕來源，依現場管線與建物狀況判斷可能原因。",
+    "棟鑫工程行提供台北、新北含中和區抓漏與漏水檢測，檢查牆面滲水、天花板滴水及水管漏水。基本抓漏3000元，額外儀器與拆木作由師傅現場評估另報。電話0918-808-209或LINE說明狀況後確認派工。",
 
   alternates: {
     canonical: "https://www.dongxin24.com/zhua-lou",
   },
 
   openGraph: {
-    title: "台北新北抓漏｜漏水檢測｜棟鑫水電",
+    title: "台北新北抓漏｜基本抓漏3000元｜棟鑫工程行",
     description:
-      "雙北抓漏與漏水檢測，協助判斷牆面滲水、天花板漏水、水管漏水及不明水痕來源。",
+      "雙北抓漏與漏水檢測，基本抓漏3000元；額外儀器與拆木作由師傅現場評估另報。",
     url: "https://www.dongxin24.com/zhua-lou",
     siteName: "棟鑫水電",
     locale: "zh_TW",
@@ -52,6 +54,10 @@ const services = [
 ];
 
 const faqs = [
+  {
+    q: "抓漏多少錢？需要拆木作或額外儀器怎麼計費？",
+    a: "基本抓漏3000元。額外儀器與拆木作由師傅現場評估另報；檢測後的修繕工項與費用另行說明，經您同意才施工。",
+  },
   {
     q: "抓漏一定可以一次找到漏水點嗎？",
     a: "不一定。漏水可能受到建物結構、管線配置、滲水路徑及漏水量影響，有些現場需要分階段檢查才能逐步縮小範圍。",
@@ -217,6 +223,7 @@ export default function Page() {
         </div>
       </section>
 
+      <ServiceBooking leakDetection />
       {/* 抓漏項目 */}
       <section style={{ padding: "75px 20px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
@@ -425,6 +432,7 @@ export default function Page() {
           📞 立即聯絡棟鑫水電
         </a>
       </section>
+    <ServicePhotos ids={["leak"]} />
     <ServiceContext route="/zhua-lou" />
     </main>
   );

@@ -1,20 +1,22 @@
 import Breadcrumbs from "../components/Breadcrumbs";
 import ServiceContext from "../components/ServiceContext";
 import PageFaqs from "../components/PageFaqs";
+import ServiceBooking from "../components/ServiceBooking";
+import ServicePhotos from "../components/ServicePhotos";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "台北新北跳電維修｜漏電檢查與配電箱維修｜棟鑫水電",
+  title: "台北新北跳電維修｜漏電檢查・24小時聯絡｜棟鑫工程行",
 
   description:
-    "台北、新北跳電與漏電檢查，協助確認插座沒電、開關反覆跳脫及配電箱異常。棟鑫水電24小時可先電話聯絡，依現場檢查說明修繕方式與報價，確認後再施工。",
+    "台北、新北含中和區跳電維修、漏電檢查與配電箱檢修。棟鑫工程行24小時可聯絡，出工費依時段，材料工資另計，現場報價、同意才施工。電話0918-808-209或LINE說明故障後確認派工。",
 
   alternates: {
     canonical: "https://www.dongxin24.com/tiao-dian",
   },
 
   openGraph: {
-    title: "台北新北跳電維修｜漏電與配電箱檢修｜棟鑫水電",
+    title: "台北新北跳電維修｜漏電檢查｜棟鑫工程行",
     description:
       "雙北24小時跳電維修，處理漏電、配電箱、無熔絲開關及電路異常。",
     url: "https://www.dongxin24.com/tiao-dian",
@@ -52,6 +54,10 @@ const services = [
 ];
 
 const faqs = [
+  {
+    q: "跳電維修怎麼收費？",
+    a: "出工費依時段先說明，材料工資另計。師傅現場檢查後報價，確認工項並經您同意才施工；實際派工與到場時間依位置及師傅排程確認。",
+  },
   {
     q: "只有一個插座沒電，也需要換整戶電線嗎？",
     a: "不一定。應先釐清同房間其他插座與照明是否正常，以及是否伴隨鬆動、變色或異味，再由師傅檢查插座、接點與上游迴路。不要自行拆開插座或帶電測試；局部修繕或換線範圍，需現場確認後說明。",
@@ -219,6 +225,7 @@ export default function Page() {
         </div>
       </section>
 
+      <ServiceBooking />
       {/* 服務內容 */}
       <section
         style={{
@@ -460,6 +467,7 @@ export default function Page() {
           📞 立即聯絡棟鑫水電
         </a>
       </section>
+    <ServicePhotos ids={["panel", "breaker"]} />
     <ServiceContext route="/tiao-dian" />
     </main>
   );
